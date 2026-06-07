@@ -6,356 +6,136 @@
 <title>The Greek Cheetah Protocol</title>
 <style>
   :root {
-    --bg: #09090c;
-    --surface: #111116;
-    --surface2: #16161e;
-    --surface3: #1c1c28;
-    --border: #252535;
-    --border-light: #303045;
-    --text: #e8e8f0;
-    --text-secondary: #9a9ab0;
-    --text-muted: #686884;
-    --gold: #d4a553;
-    --gold-bright: #f0ce70;
-    --gold-dim: #a07830;
-    --gold-bg: rgba(212,165,83,0.08);
-    --gold-border: rgba(212,165,83,0.18);
-    --amber: #d4935a;
-    --amber-bg: rgba(212,147,90,0.10);
-    --rose: #cc7b8a;
-    --rose-bg: rgba(204,123,138,0.08);
-    --teal: #6baf92;
-    --teal-bg: rgba(107,175,146,0.08);
-    --steel: #8fa4b8;
-    --steel-bg: rgba(143,164,184,0.08);
-    --danger: #cc6666;
-    --danger-bg: rgba(204,102,102,0.08);
-    --danger-border: rgba(204,102,102,0.20);
-    --font: 'Georgia', 'Times New Roman', 'Palatino', serif;
-    --font-mono: 'SF Mono', 'Cascadia Code', 'Consolas', monospace;
-    --radius: 10px;
-    --radius-sm: 6px;
-    --max-w: 880px;
+    --bg: #09090c; --surface: #111116; --surface2: #16161e; --surface3: #1c1c28;
+    --border: #252535; --border-light: #303045;
+    --text: #e8e8f0; --text-secondary: #9a9ab0; --text-muted: #686884;
+    --gold: #d4a553; --gold-bright: #f0ce70; --gold-dim: #a07830;
+    --gold-bg: rgba(212,165,83,0.08); --gold-border: rgba(212,165,83,0.18);
+    --amber: #d4935a; --amber-bg: rgba(212,147,90,0.10);
+    --rose: #cc7b8a; --rose-bg: rgba(204,123,138,0.08);
+    --teal: #6baf92; --teal-bg: rgba(107,175,146,0.08);
+    --steel: #8fa4b8; --steel-bg: rgba(143,164,184,0.08);
+    --danger: #cc6666; --danger-bg: rgba(204,102,102,0.08); --danger-border: rgba(204,102,102,0.20);
+    --font: 'Georgia','Times New Roman','Palatino',serif;
+    --radius: 10px; --radius-sm: 6px; --max-w: 880px;
   }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:var(--bg);color:var(--text);font-family:var(--font);line-height:1.75;font-size:1rem;-webkit-font-smoothing:antialiased}
+  h1,h2,h3,h4{font-weight:400;letter-spacing:.02em}
+  h2{font-size:1.55rem;color:var(--gold-bright)}
+  h3{font-size:1.15rem;color:var(--text)}
+  a{color:var(--gold);text-decoration:none;transition:color .2s}
+  a:hover{color:var(--gold-bright)}
 
-  * { margin: 0; padding: 0; box-sizing: border-box; }
+  .top-nav{position:sticky;top:0;z-index:100;background:rgba(9,9,12,.92);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--border);display:flex;gap:24px;padding:12px 24px;justify-content:center;overflow-x:auto}
+  .top-nav a{color:var(--text-muted);font-size:.78rem;letter-spacing:.06em;text-transform:uppercase;white-space:nowrap;padding:4px 0}
+  .top-nav a:hover{color:var(--gold)}
+  .top-nav .brand{font-weight:700;color:var(--gold-bright);letter-spacing:.08em;margin-right:16px}
 
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: var(--font);
-    line-height: 1.75;
-    font-size: 1rem;
-    -webkit-font-smoothing: antialiased;
-  }
+  .hero{text-align:center;padding:80px 24px 64px;position:relative;overflow:hidden;background:radial-gradient(ellipse 70% 60% at 50% 30%,rgba(212,165,83,.06) 0%,transparent 70%),radial-gradient(ellipse 60% 50% at 30% 70%,rgba(143,164,184,.04) 0%,transparent 70%)}
+  .hero h1{font-size:clamp(2rem,5vw,3.2rem);font-weight:400;letter-spacing:.04em;background:linear-gradient(135deg,var(--gold-bright) 0%,#f8e0a0 30%,var(--steel) 60%,var(--gold-bright) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:14px}
+  .hero .subtitle{font-size:1.05rem;color:var(--text-muted);font-style:italic;max-width:580px;margin:0 auto 28px}
+  .hero .tags{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+  .hero .tag{background:var(--surface2);border:1px solid var(--border);border-radius:100px;padding:7px 20px;font-size:.82rem;color:var(--text-secondary);letter-spacing:.04em}
+  .hero .tag strong{color:var(--gold-bright);font-weight:400}
 
-  /* ── Typography ──────────────────── */
-  h1, h2, h3, h4 { font-weight: 400; letter-spacing: 0.02em; }
-  h2 { font-size: 1.55rem; color: var(--gold-bright); }
-  h3 { font-size: 1.15rem; color: var(--text); }
-  h4 { font-size: 0.95rem; color: var(--text-secondary); }
+  .container{max-width:var(--max-w);margin:0 auto;padding:0 24px 80px}
+  .section{margin-top:72px}
+  .section-header{text-align:center;margin-bottom:36px}
+  .section-header h2{margin-bottom:10px}
+  .section-header .rule{width:50px;height:2px;background:linear-gradient(90deg,var(--gold),var(--steel));margin:0 auto;border-radius:1px}
 
-  a { color: var(--gold); text-decoration: none; transition: color 0.2s; }
-  a:hover { color: var(--gold-bright); }
+  .card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:28px 32px;margin-bottom:20px}
+  .goal-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
+  .goal-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:26px 20px;text-align:center;transition:border-color .25s,background .25s}
+  .goal-card:hover{border-color:var(--gold-border);background:var(--surface2)}
+  .goal-card .icon{font-size:2rem;margin-bottom:8px}
+  .goal-card h3{font-size:1rem;color:var(--gold-bright);margin-bottom:6px}
+  .goal-card p{font-size:.85rem;color:var(--text-muted);line-height:1.6}
 
-  /* ── Top Nav ─────────────────────── */
-  .top-nav {
-    position: sticky; top: 0; z-index: 100;
-    background: rgba(9,9,12,0.92);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border-bottom: 1px solid var(--border);
-    display: flex; gap: 24px; padding: 12px 24px;
-    justify-content: center; overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-  }
-  .top-nav a {
-    color: var(--text-muted);
-    font-size: 0.78rem;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    white-space: nowrap;
-    padding: 4px 0;
-  }
-  .top-nav a:hover, .top-nav a.active { color: var(--gold); }
-  .top-nav .brand { font-weight: 700; color: var(--gold-bright); letter-spacing: 0.08em; margin-right: 16px; }
+  .table-wrap{overflow-x:auto}
+  table{width:100%;border-collapse:collapse;font-size:.84rem;min-width:640px}
+  th{font-weight:400;color:var(--gold-bright);letter-spacing:.05em;font-size:.7rem;text-transform:uppercase;white-space:nowrap;padding:10px 10px;text-align:left;border-bottom:1px solid var(--border-light)}
+  td{padding:9px 10px;text-align:left;border-bottom:1px solid var(--border)}
+  tr:last-child td{border-bottom:none}
 
-  /* ── Hero ────────────────────────── */
-  .hero {
-    text-align: center; padding: 80px 24px 64px;
-    position: relative; overflow: hidden;
-    background: radial-gradient(ellipse 70% 60% at 50% 30%, rgba(212,165,83,0.06) 0%, transparent 70%),
-                radial-gradient(ellipse 60% 50% at 30% 70%, rgba(143,164,184,0.04) 0%, transparent 70%);
-  }
-  .hero h1 {
-    font-size: clamp(2rem, 5vw, 3.2rem);
-    font-weight: 400; letter-spacing: 0.04em;
-    background: linear-gradient(135deg, var(--gold-bright) 0%, #f8e0a0 30%, var(--steel) 60%, var(--gold-bright) 100%);
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-    background-clip: text;
-    margin-bottom: 14px;
-  }
-  .hero .subtitle {
-    font-size: 1.05rem; color: var(--text-muted);
-    font-style: italic; max-width: 560px; margin: 0 auto 28px;
-  }
-  .hero .tags { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
-  .hero .tag {
-    background: var(--surface2); border: 1px solid var(--border);
-    border-radius: 100px; padding: 7px 20px;
-    font-size: 0.82rem; color: var(--text-secondary); letter-spacing: 0.04em;
-  }
-  .hero .tag strong { color: var(--gold-bright); font-weight: 400; }
+  .score-bar{display:flex;align-items:center;gap:6px}
+  .score-bar .fill{height:4px;border-radius:2px;min-width:2px}
+  .score-bar .pct{font-size:.72rem;color:var(--text-muted);min-width:26px;text-align:right}
+  .fill-a{background:var(--gold)} .fill-b{background:var(--amber)} .fill-c{background:var(--steel)}
+  .fill-d{background:var(--rose)} .fill-e{background:var(--teal)} .fill-f{background:var(--rose);opacity:.6}
 
-  /* ── Layout ──────────────────────── */
-  .container { max-width: var(--max-w); margin: 0 auto; padding: 0 24px 80px; }
+  .rank{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;font-size:.68rem;font-weight:700}
+  .rank-1{background:linear-gradient(135deg,var(--gold),var(--gold-bright));color:#0a0a0f}
+  .rank-2{background:linear-gradient(135deg,#c8c8d4,#e8e8f4);color:#0a0a0f}
+  .rank-3{background:linear-gradient(135deg,var(--gold-dim),var(--gold));color:#0a0a0f}
+  .rank-default{background:var(--surface3);color:var(--text-secondary)}
 
-  .section { margin-top: 72px; }
-  .section-header {
-    text-align: center; margin-bottom: 36px;
-  }
-  .section-header h2 { margin-bottom: 10px; }
-  .section-header .rule {
-    width: 50px; height: 2px;
-    background: linear-gradient(90deg, var(--gold), var(--steel));
-    margin: 0 auto; border-radius: 1px;
-  }
+  .load-badge{display:inline-block;padding:3px 10px;border-radius:4px;font-size:.68rem;letter-spacing:.05em;white-space:nowrap}
+  .load-heavy{background:rgba(204,102,102,.15);color:var(--danger)}
+  .load-medium{background:var(--gold-bg);color:var(--gold)}
+  .load-light{background:var(--steel-bg);color:var(--steel)}
 
-  /* ── Cards ───────────────────────── */
-  .card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 28px 32px;
-    margin-bottom: 20px;
-  }
-  .card-wide { margin-bottom: 20px; }
+  .profile{border-left:3px solid var(--gold);padding:0 0 0 22px;margin-bottom:52px}
+  .profile h3{font-size:1.25rem;color:var(--gold-bright);margin-bottom:2px}
+  .profile .rank-label{font-size:.74rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:.07em;margin-bottom:16px}
+  .profile .metric-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin:16px 0}
+  .profile .metric{background:var(--gold-bg);border:1px solid var(--gold-border);border-radius:var(--radius-sm);padding:12px 10px;text-align:center}
+  .profile .metric .value{font-size:1.1rem;color:var(--gold-bright)}
+  .profile .metric .label{font-size:.68rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:.05em;margin-top:3px}
+  .profile p{color:var(--text-secondary);font-size:.9rem;line-height:1.7;margin-bottom:10px}
+  .profile .note{font-size:.82rem;color:var(--text-muted)}
+  .profile.amber{border-left-color:var(--amber)}
+  .profile.amber .metric{background:var(--amber-bg);border-color:rgba(212,147,90,.18)}
+  .profile.amber .metric .value,.profile.amber h3{color:#f0b880}
+  .profile.teal{border-left-color:var(--teal)}
+  .profile.teal .metric{background:var(--teal-bg);border-color:rgba(107,175,146,.18)}
+  .profile.teal .metric .value,.profile.teal h3{color:var(--teal)}
+  .profile.steel{border-left-color:var(--steel)}
+  .profile.steel .metric{background:var(--steel-bg);border-color:rgba(143,164,184,.18)}
+  .profile.steel .metric .value,.profile.steel h3{color:var(--steel)}
+  .profile.rose{border-left-color:var(--rose)}
+  .profile.rose .metric{background:var(--rose-bg);border-color:rgba(204,123,138,.18)}
+  .profile.rose .metric .value,.profile.rose h3{color:var(--rose)}
+  .profile.indigo{border-left-color:#7b8acc}
+  .profile.indigo .metric{background:rgba(123,138,204,.08);border-color:rgba(123,138,204,.18)}
+  .profile.indigo .metric .value,.profile.indigo h3{color:#a0b0f0}
 
-  /* ── Goal Grid ───────────────────── */
-  .goal-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 16px;
-  }
-  .goal-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 26px 20px;
-    text-align: center;
-    transition: border-color 0.25s, background 0.25s;
-  }
-  .goal-card:hover { border-color: var(--gold-border); background: var(--surface2); }
-  .goal-card .icon { font-size: 2rem; margin-bottom: 8px; }
-  .goal-card h3 { font-size: 1rem; color: var(--gold-bright); margin-bottom: 6px; }
-  .goal-card p { font-size: 0.85rem; color: var(--text-muted); line-height: 1.6; }
+  .alert{padding:16px 20px;border-radius:var(--radius-sm);margin:14px 0;font-size:.84rem;line-height:1.6}
+  .alert-warn{background:var(--gold-bg);border:1px solid var(--gold-border);color:var(--gold)}
+  .alert-danger{background:var(--danger-bg);border:1px solid var(--danger-border);color:var(--danger)}
+  .alert strong{color:inherit}
 
-  /* ── Tables ──────────────────────── */
-  .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
-  table {
-    width: 100%; border-collapse: collapse;
-    font-size: 0.84rem; min-width: 640px;
-  }
-  th {
-    font-weight: 400; color: var(--gold-bright);
-    letter-spacing: 0.05em; font-size: 0.7rem;
-    text-transform: uppercase; white-space: nowrap;
-    padding: 10px 10px; text-align: left;
-    border-bottom: 1px solid var(--border-light);
-  }
-  td {
-    padding: 9px 10px; text-align: left;
-    border-bottom: 1px solid var(--border);
-  }
-  tr:last-child td { border-bottom: none; }
+  .schedule-block{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:24px 28px;margin-bottom:16px}
+  .schedule-block .time-label{font-size:.78rem;text-transform:uppercase;letter-spacing:.1em;color:var(--gold);margin-bottom:14px;font-weight:500}
+  .sched-item{display:flex;align-items:center;gap:16px;padding:9px 0;border-bottom:1px solid rgba(255,255,255,.03);font-size:.9rem}
+  .sched-item:last-child{border-bottom:none}
+  .sched-item .name{min-width:130px;font-weight:500}
+  .sched-item .dose{color:var(--gold-bright);min-width:110px;font-size:.84rem}
+  .sched-item .note{color:var(--text-muted);font-size:.8rem;font-style:italic}
 
-  /* Score bars */
-  .score-bar { display: flex; align-items: center; gap: 6px; }
-  .score-bar .fill { height: 4px; border-radius: 2px; min-width: 2px; }
-  .score-bar .pct { font-size: 0.72rem; color: var(--text-muted); min-width: 26px; text-align: right; }
-  .fill-a { background: var(--gold); }
-  .fill-b { background: var(--amber); }
-  .fill-c { background: var(--steel); }
-  .fill-d { background: var(--rose); }
-  .fill-e { background: var(--teal); }
-  .fill-f { background: var(--rose); opacity: 0.6; }
+  .cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin:12px 0;font-size:.78rem}
+  .cal-day{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px 6px;text-align:center}
+  .cal-day .day{font-size:.68rem;text-transform:uppercase;letter-spacing:.06em;color:var(--text-muted);margin-bottom:6px}
+  .cal-day .dots{margin-bottom:4px}
+  .cal-day .dots span{display:inline-block;width:5px;height:5px;border-radius:50%;margin:1px 2px}
+  .d-heavy{background:var(--danger)} .d-active{background:var(--gold)} .d-off{background:var(--border)}
+  .cal-day .label{font-size:.65rem;color:var(--text-muted);margin-top:4px}
 
-  /* Rank badges */
-  .rank { display: inline-flex; align-items: center; justify-content: center;
-    width: 24px; height: 24px; border-radius: 50%;
-    font-size: 0.68rem; font-weight: 700; }
-  .rank-1 { background: linear-gradient(135deg, var(--gold), var(--gold-bright)); color: #0a0a0f; }
-  .rank-2 { background: linear-gradient(135deg, #c8c8d4, #e8e8f4); color: #0a0a0f; }
-  .rank-3 { background: linear-gradient(135deg, var(--gold-dim), var(--gold)); color: #0a0a0f; }
-  .rank-default { background: var(--surface3); color: var(--text-secondary); }
+  .checklist{list-style:none}
+  .checklist li{padding:7px 0 7px 26px;position:relative;color:var(--text-secondary);font-size:.88rem}
+  .checklist li::before{content:'◇';position:absolute;left:0;top:8px;color:var(--gold);font-size:.6rem}
 
-  /* Load badges */
-  .load-badge {
-    display: inline-block; padding: 3px 10px; border-radius: 4px;
-    font-size: 0.68rem; letter-spacing: 0.05em; white-space: nowrap;
-  }
-  .load-heavy { background: rgba(204,102,102,0.15); color: var(--danger); }
-  .load-medium { background: var(--gold-bg); color: var(--gold); }
-  .load-light { background: var(--steel-bg); color: var(--steel); }
+  .disclaimer{background:var(--surface);border:1px solid var(--danger-border);border-radius:var(--radius);padding:28px 32px;margin-top:60px;text-align:center;color:var(--text-muted);font-size:.82rem}
+  .disclaimer h4{color:var(--rose);margin-bottom:10px}
+  .footer{text-align:center;color:var(--text-muted);font-size:.74rem;padding:36px 24px;border-top:1px solid var(--border);margin-top:48px}
+  .footer a{color:var(--text-muted)}
 
-  /* ── Peptide Profiles ────────────── */
-  .profile {
-    border-left: 3px solid var(--gold);
-    padding: 0 0 0 22px;
-    margin-bottom: 52px;
-  }
-  .profile h3 { font-size: 1.25rem; color: var(--gold-bright); margin-bottom: 2px; }
-  .profile .rank-label {
-    font-size: 0.74rem; color: var(--text-muted);
-    text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 16px;
-  }
-  .profile .metric-row {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-    gap: 10px; margin: 16px 0;
-  }
-  .profile .metric {
-    background: var(--gold-bg); border: 1px solid var(--gold-border);
-    border-radius: var(--radius-sm); padding: 12px 10px; text-align: center;
-  }
-  .profile .metric .value { font-size: 1.1rem; color: var(--gold-bright); }
-  .profile .metric .label {
-    font-size: 0.68rem; color: var(--text-muted);
-    text-transform: uppercase; letter-spacing: 0.05em; margin-top: 3px;
-  }
-  .profile p { color: var(--text-secondary); font-size: 0.9rem; line-height: 1.7; margin-bottom: 10px; }
-  .profile .note { font-size: 0.82rem; color: var(--text-muted); }
-
-  .profile.amber { border-left-color: var(--amber); }
-  .profile.amber .metric { background: var(--amber-bg); border-color: rgba(212,147,90,0.18); }
-  .profile.amber .metric .value { color: var(--amber); }
-  .profile.amber h3 { color: #f0b880; }
-
-  .profile.teal { border-left-color: var(--teal); }
-  .profile.teal .metric { background: var(--teal-bg); border-color: rgba(107,175,146,0.18); }
-  .profile.teal .metric .value { color: var(--teal); }
-  .profile.teal h3 { color: var(--teal); }
-
-  .profile.steel { border-left-color: var(--steel); }
-  .profile.steel .metric { background: var(--steel-bg); border-color: rgba(143,164,184,0.18); }
-  .profile.steel .metric .value { color: var(--steel); }
-  .profile.steel h3 { color: var(--steel); }
-
-  .profile.rose { border-left-color: var(--rose); }
-  .profile.rose .metric { background: var(--rose-bg); border-color: rgba(204,123,138,0.18); }
-  .profile.rose .metric .value { color: var(--rose); }
-  .profile.rose h3 { color: var(--rose); }
-
-  /* ── Alerts ──────────────────────── */
-  .alert {
-    padding: 16px 20px; border-radius: var(--radius-sm);
-    margin: 14px 0; font-size: 0.84rem; line-height: 1.6;
-  }
-  .alert-warn {
-    background: var(--gold-bg); border: 1px solid var(--gold-border);
-    color: var(--gold);
-  }
-  .alert-danger {
-    background: var(--danger-bg); border: 1px solid var(--danger-border);
-    color: var(--danger);
-  }
-  .alert strong { color: inherit; }
-
-  /* ── Schedule ────────────────────── */
-  .schedule-block {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 24px 28px; margin-bottom: 16px;
-  }
-  .schedule-block .time-label {
-    font-size: 0.78rem; text-transform: uppercase;
-    letter-spacing: 0.1em; color: var(--gold); margin-bottom: 14px;
-    font-weight: 500;
-  }
-  .sched-item {
-    display: flex; align-items: center; gap: 16px;
-    padding: 9px 0; border-bottom: 1px solid rgba(255,255,255,0.03);
-    font-size: 0.9rem;
-  }
-  .sched-item:last-child { border-bottom: none; }
-  .sched-item .name { min-width: 130px; font-weight: 500; }
-  .sched-item .dose { color: var(--gold-bright); min-width: 110px; font-size: 0.84rem; }
-  .sched-item .note { color: var(--text-muted); font-size: 0.8rem; font-style: italic; }
-
-  /* ── Calendar ────────────────────── */
-  .cal-grid {
-    display: grid; grid-template-columns: repeat(7, 1fr);
-    gap: 4px; margin: 12px 0; font-size: 0.78rem;
-  }
-  .cal-day {
-    background: var(--surface2); border: 1px solid var(--border);
-    border-radius: var(--radius-sm); padding: 12px 6px; text-align: center;
-  }
-  .cal-day .day { font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted); margin-bottom: 6px; }
-  .cal-day .dots { margin-bottom: 4px; }
-  .cal-day .dots span { display: inline-block; width: 5px; height: 5px; border-radius: 50%; margin: 1px 2px; }
-  .d-heavy { background: var(--danger); }
-  .d-active { background: var(--gold); }
-  .d-off { background: var(--border); }
-  .cal-day .label { font-size: 0.65rem; color: var(--text-muted); margin-top: 4px; }
-
-  /* ── Timeline dots ───────────────── */
-  .dot-on {
-    display: inline-block; width: 12px; height: 12px;
-    border-radius: 50%; margin: 0 1px;
-  }
-
-  /* ── Checklist ───────────────────── */
-  .checklist { list-style: none; }
-  .checklist li {
-    padding: 7px 0 7px 26px; position: relative;
-    color: var(--text-secondary); font-size: 0.88rem;
-  }
-  .checklist li::before {
-    content: '◇'; position: absolute; left: 0; top: 8px;
-    color: var(--gold); font-size: 0.6rem;
-  }
-
-  /* ── Footer & Disclaimer ─────────── */
-  .disclaimer {
-    background: var(--surface); border: 1px solid var(--danger-border);
-    border-radius: var(--radius); padding: 28px 32px; margin-top: 60px;
-    text-align: center; color: var(--text-muted); font-size: 0.82rem;
-  }
-  .disclaimer h4 { color: var(--rose); margin-bottom: 10px; }
-
-  .footer {
-    text-align: center; color: var(--text-muted);
-    font-size: 0.74rem; padding: 36px 24px;
-    border-top: 1px solid var(--border); margin-top: 48px;
-  }
-  .footer a { color: var(--text-muted); }
-
-  /* ── Macro cycle dot grid ────────── */
-  .macro-table td { text-align: center; padding: 8px 4px; }
-  .macro-on { background: var(--gold-bg); border-radius: 50%; width: 10px; height: 10px; display: inline-block; }
-  .macro-off { background: var(--border); border-radius: 50%; width: 10px; height: 10px; display: inline-block; }
-
-  /* ── Responsive ──────────────────── */
-  @media (max-width: 700px) {
-    .cal-grid { grid-template-columns: repeat(4, 1fr); }
-    .container { padding: 0 16px 60px; }
-    .card, .schedule-block { padding: 20px 16px; }
-    .profile { padding-left: 14px; }
-    .goal-grid { grid-template-columns: 1fr; }
-    .sched-item { flex-direction: column; align-items: flex-start; gap: 3px; }
-    .sched-item .name { min-width: auto; }
-    .top-nav { gap: 14px; padding: 10px 14px; }
-    .top-nav .brand { margin-right: 8px; }
-    .profile .metric-row { grid-template-columns: repeat(2, 1fr); }
-    .hero { padding: 50px 16px 44px; }
-  }
+  @media(max-width:700px){.cal-grid{grid-template-columns:repeat(4,1fr)}.container{padding:0 16px 60px}.card,.schedule-block{padding:20px 16px}.profile{padding-left:14px}.goal-grid{grid-template-columns:1fr}.sched-item{flex-direction:column;align-items:flex-start;gap:3px}.sched-item .name{min-width:auto}.top-nav{gap:14px;padding:10px 14px}.profile .metric-row{grid-template-columns:repeat(2,1fr)}.hero{padding:50px 16px 44px}}
 </style>
 </head>
 <body>
 
-<!-- ── Navigation ──────────────────── -->
 <nav class="top-nav">
   <span class="brand">GREEK CHEETAH</span>
   <a href="#overview">Overview</a>
@@ -369,12 +149,11 @@
   <a href="#faq">FAQ</a>
 </nav>
 
-<!-- ── Hero ────────────────────────── -->
 <section class="hero">
   <h1>The Greek Cheetah Protocol</h1>
-  <p class="subtitle">A comprehensive 11-peptide protocol for cellular health, energy, cognition, body composition, sleep, and regeneration</p>
+  <p class="subtitle">A comprehensive 12-peptide protocol for cellular health, energy, cognition, body composition, sleep, and regeneration</p>
   <div class="tags">
-    <span class="tag"><strong>11</strong> Peptides</span>
+    <span class="tag"><strong>12</strong> Peptides</span>
     <span class="tag"><strong>6</strong> Goals</span>
     <span class="tag"><strong>Full Optimization</strong></span>
   </div>
@@ -382,227 +161,57 @@
 
 <div class="container">
 
-<!-- ── Overview ────────────────────── -->
+<!-- Overview -->
 <div class="section" id="overview">
-<div class="section-header">
-  <h2>Protocol Overview</h2>
-  <div class="rule"></div>
-</div>
+<div class="section-header"><h2>Protocol Overview</h2><div class="rule"></div></div>
 <div class="goal-grid">
-  <div class="goal-card">
-    <div class="icon">🔬</div>
-    <h3>Cell Improvement</h3>
-    <p>Mitochondrial biogenesis, antioxidant defense, gene-level cellular maintenance. MOTS-c, Glutathione, and Pinealon form the core.</p>
-  </div>
-  <div class="goal-card">
-    <div class="icon">⚡</div>
-    <h3>Energy</h3>
-    <p>Metabolic optimization, fatty acid oxidation, exercise mimetic support. MOTS-c leads; Tesa/Ipa and Glutathione amplify.</p>
-  </div>
-  <div class="goal-card">
-    <div class="icon">🧠</div>
-    <h3>Cognitive Boost</h3>
-    <p>Acute BDNF-driven focus + structural neuroprotection. Semax delivers the now; Pinealon builds for the decades.</p>
-  </div>
-  <div class="goal-card">
-    <div class="icon">⚖️</div>
-    <h3>Weight Loss</h3>
-    <p>Visceral fat reduction via GH axis. Tesamorelin/Ipamorelin targets VAT reduction. No GLP-1 agonists.</p>
-  </div>
-  <div class="goal-card">
-    <div class="icon">😴</div>
-    <h3>Sleep</h3>
-    <p>Delta-wave restoration, circadian reinforcement, sleep architecture optimization. DSIP, Pinealon, and Selank work in concert.</p>
-  </div>
-  <div class="goal-card">
-    <div class="icon">✨</div>
-    <h3>Hair &amp; Skin</h3>
-    <p>Collagen support, antioxidant skin protection, tissue regeneration. GH axis + Glutathione + Wolverine Stack + GHK-Cu.</p>
-  </div>
+  <div class="goal-card"><div class="icon">🔬</div><h3>Cell Improvement</h3><p>Mitochondrial biogenesis, antioxidant defense, gene-level cellular maintenance. MOTS-c, Glutathione, and Pinealon form the core.</p></div>
+  <div class="goal-card"><div class="icon">⚡</div><h3>Energy</h3><p>Metabolic optimization, fatty acid oxidation, exercise mimetic support. MOTS-c leads; Tesamorelin/Ipamorelin and Glutathione amplify.</p></div>
+  <div class="goal-card"><div class="icon">🧠</div><h3>Cognitive Boost</h3><p>Acute BDNF-driven focus + structural neuroprotection. Semax delivers the now; Pinealon builds for the decades.</p></div>
+  <div class="goal-card"><div class="icon">⚖️</div><h3>Weight Loss</h3><p>Visceral fat reduction via GH axis. Tesamorelin is FDA-approved for VAT reduction; Ipamorelin amplifies GH output. No GLP-1 agonists.</p></div>
+  <div class="goal-card"><div class="icon">😴</div><h3>Sleep</h3><p>Delta-wave restoration, circadian reinforcement, sleep architecture optimization. DSIP, Pinealon, Ipamorelin, and Selank work in concert.</p></div>
+  <div class="goal-card"><div class="icon">✨</div><h3>Hair &amp; Skin</h3><p>Collagen support, antioxidant skin protection, tissue regeneration. GH axis + Glutathione + Wolverine Stack + GHK-Cu.</p></div>
 </div>
 </div>
 
-<!-- ── Effectiveness Ranking ───────── -->
+<!-- Effectiveness Ranking -->
 <div class="section" id="ranking">
-<div class="section-header">
-  <h2>Effectiveness Ranking</h2>
-  <div class="rule"></div>
-</div>
-<p style="text-align:center;color:var(--text-muted);margin-bottom:28px;">
-  All 6 goals equally weighted. Broad-spectrum peptides rank higher; specialists dominate their lane. Overall = average across all 6 categories.
-</p>
-
+<div class="section-header"><h2>Effectiveness Ranking</h2><div class="rule"></div></div>
+<p style="text-align:center;color:var(--text-muted);margin-bottom:28px;">All 6 goals equally weighted. Broad-spectrum peptides rank higher; specialists dominate their lane. Overall = average across all 6 categories.</p>
 <div class="card" style="padding:16px 20px;">
 <div class="table-wrap">
 <table>
-  <thead>
-    <tr>
-      <th>#</th><th>Peptide</th><th>Primary Role</th>
-      <th>Cell</th><th>Energy</th><th>Cognitive</th><th>Weight Loss</th><th>Sleep</th><th>Hair/Skin</th>
-      <th>Overall</th>
-    </tr>
-  </thead>
+  <thead><tr><th>#</th><th>Peptide</th><th>Primary Role</th><th>Cell</th><th>Energy</th><th>Cognitive</th><th>Weight Loss</th><th>Sleep</th><th>Hair/Skin</th><th>Overall</th></tr></thead>
   <tbody>
-    <tr>
-      <td><span class="rank rank-1">1</span></td>
-      <td><strong>Tesa/Ipa Blend</strong></td>
-      <td style="font-size:0.78rem;color:var(--text-muted);">GHRH + GHRP Synergy</td>
-      <td><div class="score-bar"><div class="fill fill-a" style="width:30px;"></div><span class="pct">30</span></div></td>
-      <td><div class="score-bar"><div class="fill fill-b" style="width:50px;"></div><span class="pct">50</span></div></td>
-      <td><div class="score-bar"><div class="fill fill-c" style="width:20px;"></div><span class="pct">20</span></div></td>
-      <td><div class="score-bar"><div class="fill fill-d" style="width:85px;"></div><span class="pct">85</span></div></td>
-      <td><div class="score-bar"><div class="fill fill-e" style="width:70px;"></div><span class="pct">70</span></div></td>
-      <td><div class="score-bar"><div class="fill fill-f" style="width:60px;"></div><span class="pct">60</span></div></td>
-      <td><strong style="color:var(--gold-bright);">52.5</strong></td>
-    </tr>
-    <tr>
-      <td><span class="rank rank-2">2</span></td>
-      <td><strong>MOTS-c</strong></td>
-      <td style="font-size:0.78rem;color:var(--text-muted);">Mitochondrial Metabolic Switch</td>
-      <td><div class="score-bar"><div class="fill fill-a" style="width:90px;"></div><span class="pct">90</span></div></td>
-      <td><div class="score-bar"><div class="fill fill-b" style="width:95px;"></div><span class="pct">95</span></div></td>
-      <td><div class="score-bar"><div class="fill fill-c" style="width:20px;"></div><span class="pct">20</span></div></td>
-      <td><div class="score-bar"><div class="fill fill-d" style="width:70px;"></div><span class="pct">70</span></div></td>
-      <td><div class="score-bar"><div class="fill fill-e" style="width:0px;"></div><span class="pct">0</span></div></td>
-      <td><div class="score-bar"><div class="fill fill-f" style="width:10px;"></div><span class="pct">10</span></div></td>
-      <td><strong style="color:#c8c8d4;">47.5</strong></td>
-    </tr>
-    <tr>
-      <td><span class="rank rank-3">3</span></td>
-      <td><strong>Glutathione</strong></td>
-      <td style="font-size:0.78rem;color:var(--text-muted);">Master Antioxidant</td>
-      <td><div class="score-bar"><div class="fill fill-a" style="width:85px;"></div><span class="pct">85</span></div></td>
-      <td><div class="score-bar"><div class="fill fill-b" style="width:60px;"></div><span class="pct">60</span></div></td>
-      <td><div class="score-bar"><div class="fill fill-c" style="width:20px;"></div><span class="pct">20</span></div></td>
-      <td><div class="score-bar"><div class="fill fill-d" style="width:15px;"></div><span class="pct">15</span></div></td>
-      <td><div class="score-bar"><div class="fill fill-e" style="width:10px;"></div><span class="pct">10</span></div></td>
-      <td><div class="score-bar"><div class="fill fill-f" style="width:70px;"></div><span class="pct">70</span></div></td>
-      <td><strong style="color:var(--gold-dim);">43.3</strong></td>
-    </tr>
-    <tr>
-      <td><span class="rank rank-default">4</span></td>
-      <td><strong>Pinealon</strong></td>
-      <td style="font-size:0.78rem;color:var(--text-muted);">Brain Bioregulator</td>
-      <td><div class="score-bar"><div class="fill fill-a" style="width:70px;"></div><span class="pct">70</span></div></td>
-      <td><div class="score-bar"><div class="fill fill-b" style="width:20px;"></div><span class="pct">20</span></div></td>
-      <td><div class="score-bar"><div class="fill fill-c" style="width:80px;"></div><span class="pct">80</span></div></td>
-      <td><div class="score-bar"><div class="fill fill-d" style="width:0px;"></div><span class="pct">0</span></div></td>
-      <td><div class="score-bar"><div class="fill fill-e" style="width:75px;"></div><span class="pct">75</span></div></td>
-      <td><div class="score-bar"><div class="fill fill-f" style="width:5px;"></div><span class="pct">5</span></div></td>
-      <td><strong style="color:var(--steel);">41.7</strong></td>
-    </tr>
-    <tr>
-      <td><span class="rank rank-default">5</span></td>
-      <td><strong>IGF-1 LR3</strong></td>
-      <td style="font-size:0.78rem;color:var(--text-muted);">Direct Anabolic Signaling</td>
-      <td><div class="score-bar"><div class="fill fill-a" style="width:60px;"></div><span class="pct">60</span></div></td>
-      <td><div class="score-bar"><div class="fill fill-b" style="width:40px;"></div><span class="pct">40</span></div></td>
-      <td><div class="score-bar"><div class="fill fill-c" style="width:10px;"></div><span class="pct">10</span></div></td>
-      <td><div class="score-bar"><div class="fill fill-d" style="width:50px;"></div><span class="pct">50</span></div></td>
-      <td><div class="score-bar"><div class="fill fill-e" style="width:10px;"></div><span class="pct">10</span></div></td>
-      <td><div class="score-bar"><div class="fill fill-f" style="width:30px;"></div><span class="pct">30</span></div></td>
-      <td><strong style="color:var(--rose);">33.3</strong></td>
-    </tr>
-    <tr>
-      <td><span class="rank rank-default">6</span></td>
-      <td><strong>GHK-Cu</strong></td>
-      <td style="font-size:0.78rem;color:var(--text-muted);">Copper Peptide / Tissue Remodel</td>
-      <td><div class="score-bar"><div class="fill fill-a" style="width:55px;"></div><span class="pct">55</span></div></td>
-      <td><div class="score-bar"><div class="fill fill-b" style="width:10px;"></div><span class="pct">10</span></div></td>
-      <td><div class="score-bar"><div class="fill fill-c" style="width:5px;"></div><span class="pct">5</span></div></td>
-      <td><div class="score-bar"><div class="fill fill-d" style="width:5px;"></div><span class="pct">5</span></div></td>
-      <td><div class="score-bar"><div class="fill fill-e" style="width:10px;"></div><span class="pct">10</span></div></td>
-      <td><div class="score-bar"><div class="fill fill-f" style="width:92px;"></div><span class="pct">92</span></div></td>
-      <td><strong style="color:var(--rose);">29.5</strong></td>
-    </tr>
-    <tr>
-      <td><span class="rank rank-default">7</span></td>
-      <td><strong>DSIP</strong></td>
-      <td style="font-size:0.78rem;color:var(--text-muted);">Delta Sleep-Inducing Peptide</td>
-      <td><div class="score-bar"><div class="fill fill-a" style="width:10px;"></div><span class="pct">10</span></div></td>
-      <td><div class="score-bar"><div class="fill fill-b" style="width:20px;"></div><span class="pct">20</span></div></td>
-      <td><div class="score-bar"><div class="fill fill-c" style="width:10px;"></div><span class="pct">10</span></div></td>
-      <td><div class="score-bar"><div class="fill fill-d" style="width:5px;"></div><span class="pct">5</span></div></td>
-      <td><div class="score-bar"><div class="fill fill-e" style="width:95px;"></div><span class="pct">95</span></div></td>
-      <td><div class="score-bar"><div class="fill fill-f" style="width:15px;"></div><span class="pct">15</span></div></td>
-      <td><strong style="color:var(--teal);">25.8</strong></td>
-    </tr>
-    <tr>
-      <td><span class="rank rank-default">8</span></td>
-      <td><strong>Wolverine Stack</strong></td>
-      <td style="font-size:0.78rem;color:var(--text-muted);">BPC-157 + TB-500 Synergy</td>
-      <td><div class="score-bar"><div class="fill fill-a" style="width:60px;"></div><span class="pct">60</span></div></td>
-      <td><div class="score-bar"><div class="fill fill-b" style="width:30px;"></div><span class="pct">30</span></div></td>
-      <td><div class="score-bar"><div class="fill fill-c" style="width:10px;"></div><span class="pct">10</span></div></td>
-      <td><div class="score-bar"><div class="fill fill-d" style="width:0px;"></div><span class="pct">0</span></div></td>
-      <td><div class="score-bar"><div class="fill fill-e" style="width:10px;"></div><span class="pct">10</span></div></td>
-      <td><div class="score-bar"><div class="fill fill-f" style="width:40px;"></div><span class="pct">40</span></div></td>
-      <td><strong style="color:var(--steel);">25.0</strong></td>
-    </tr>
-    <tr>
-      <td><span class="rank rank-default">9</span></td>
-      <td><strong>Semax</strong></td>
-      <td style="font-size:0.78rem;color:var(--text-muted);">Cognitive Champion (Specialist)</td>
-      <td><div class="score-bar"><div class="fill fill-a" style="width:15px;"></div><span class="pct">15</span></div></td>
-      <td><div class="score-bar"><div class="fill fill-b" style="width:15px;"></div><span class="pct">15</span></div></td>
-      <td><div class="score-bar"><div class="fill fill-c" style="width:95px;"></div><span class="pct">95</span></div></td>
-      <td><div class="score-bar"><div class="fill fill-d" style="width:0px;"></div><span class="pct">0</span></div></td>
-      <td><div class="score-bar"><div class="fill fill-e" style="width:0px;"></div><span class="pct">0</span></div></td>
-      <td><div class="score-bar"><div class="fill fill-f" style="width:0px;"></div><span class="pct">0</span></div></td>
-      <td><strong style="color:var(--steel);">20.8</strong></td>
-    </tr>
-    <tr>
-      <td><span class="rank rank-default">10</span></td>
-      <td><strong>KPV</strong></td>
-      <td style="font-size:0.78rem;color:var(--text-muted);">Anti-Inflammatory Tripeptide</td>
-      <td><div class="score-bar"><div class="fill fill-a" style="width:50px;"></div><span class="pct">50</span></div></td>
-      <td><div class="score-bar"><div class="fill fill-b" style="width:15px;"></div><span class="pct">15</span></div></td>
-      <td><div class="score-bar"><div class="fill fill-c" style="width:15px;"></div><span class="pct">15</span></div></td>
-      <td><div class="score-bar"><div class="fill fill-d" style="width:5px;"></div><span class="pct">5</span></div></td>
-      <td><div class="score-bar"><div class="fill fill-e" style="width:10px;"></div><span class="pct">10</span></div></td>
-      <td><div class="score-bar"><div class="fill fill-f" style="width:20px;"></div><span class="pct">20</span></div></td>
-      <td><strong style="color:var(--text-muted);">19.2</strong></td>
-    </tr>
-    <tr>
-      <td><span class="rank rank-default">11</span></td>
-      <td><strong>Selank</strong></td>
-      <td style="font-size:0.78rem;color:var(--text-muted);">Anxiolytic + Calm Focus</td>
-      <td><div class="score-bar"><div class="fill fill-a" style="width:10px;"></div><span class="pct">10</span></div></td>
-      <td><div class="score-bar"><div class="fill fill-b" style="width:10px;"></div><span class="pct">10</span></div></td>
-      <td><div class="score-bar"><div class="fill fill-c" style="width:40px;"></div><span class="pct">40</span></div></td>
-      <td><div class="score-bar"><div class="fill fill-d" style="width:0px;"></div><span class="pct">0</span></div></td>
-      <td><div class="score-bar"><div class="fill fill-e" style="width:40px;"></div><span class="pct">40</span></div></td>
-      <td><div class="score-bar"><div class="fill fill-f" style="width:0px;"></div><span class="pct">0</span></div></td>
-      <td><strong style="color:var(--text-muted);">16.7</strong></td>
-    </tr>
+    <tr><td><span class="rank rank-1">1</span></td><td><strong>Tesamorelin</strong></td><td style="font-size:.78rem;color:var(--text-muted);">GHRH Analog (FDA-Approved)</td><td><div class="score-bar"><div class="fill fill-a" style="width:30px;"></div><span class="pct">30</span></div></td><td><div class="score-bar"><div class="fill fill-b" style="width:40px;"></div><span class="pct">40</span></div></td><td><div class="score-bar"><div class="fill fill-c" style="width:15px;"></div><span class="pct">15</span></div></td><td><div class="score-bar"><div class="fill fill-d" style="width:85px;"></div><span class="pct">85</span></div></td><td><div class="score-bar"><div class="fill fill-e" style="width:60px;"></div><span class="pct">60</span></div></td><td><div class="score-bar"><div class="fill fill-f" style="width:55px;"></div><span class="pct">55</span></div></td><td><strong style="color:var(--gold-bright);">47.5</strong></td></tr>
+    <tr><td><span class="rank rank-2">2</span></td><td><strong>MOTS-c</strong></td><td style="font-size:.78rem;color:var(--text-muted);">Mitochondrial Metabolic Switch</td><td><div class="score-bar"><div class="fill fill-a" style="width:90px;"></div><span class="pct">90</span></div></td><td><div class="score-bar"><div class="fill fill-b" style="width:95px;"></div><span class="pct">95</span></div></td><td><div class="score-bar"><div class="fill fill-c" style="width:20px;"></div><span class="pct">20</span></div></td><td><div class="score-bar"><div class="fill fill-d" style="width:70px;"></div><span class="pct">70</span></div></td><td><div class="score-bar"><div class="fill fill-e" style="width:0px;"></div><span class="pct">0</span></div></td><td><div class="score-bar"><div class="fill fill-f" style="width:10px;"></div><span class="pct">10</span></div></td><td><strong style="color:#c8c8d4;">47.5</strong></td></tr>
+    <tr><td><span class="rank rank-3">3</span></td><td><strong>Glutathione</strong></td><td style="font-size:.78rem;color:var(--text-muted);">Master Antioxidant</td><td><div class="score-bar"><div class="fill fill-a" style="width:85px;"></div><span class="pct">85</span></div></td><td><div class="score-bar"><div class="fill fill-b" style="width:60px;"></div><span class="pct">60</span></div></td><td><div class="score-bar"><div class="fill fill-c" style="width:20px;"></div><span class="pct">20</span></div></td><td><div class="score-bar"><div class="fill fill-d" style="width:15px;"></div><span class="pct">15</span></div></td><td><div class="score-bar"><div class="fill fill-e" style="width:10px;"></div><span class="pct">10</span></div></td><td><div class="score-bar"><div class="fill fill-f" style="width:70px;"></div><span class="pct">70</span></div></td><td><strong style="color:var(--gold-dim);">43.3</strong></td></tr>
+    <tr><td><span class="rank rank-default">4</span></td><td><strong>Pinealon</strong></td><td style="font-size:.78rem;color:var(--text-muted);">Brain Bioregulator</td><td><div class="score-bar"><div class="fill fill-a" style="width:70px;"></div><span class="pct">70</span></div></td><td><div class="score-bar"><div class="fill fill-b" style="width:20px;"></div><span class="pct">20</span></div></td><td><div class="score-bar"><div class="fill fill-c" style="width:80px;"></div><span class="pct">80</span></div></td><td><div class="score-bar"><div class="fill fill-d" style="width:0px;"></div><span class="pct">0</span></div></td><td><div class="score-bar"><div class="fill fill-e" style="width:75px;"></div><span class="pct">75</span></div></td><td><div class="score-bar"><div class="fill fill-f" style="width:5px;"></div><span class="pct">5</span></div></td><td><strong style="color:var(--steel);">41.7</strong></td></tr>
+    <tr><td><span class="rank rank-default">5</span></td><td><strong>IGF-1 LR3</strong></td><td style="font-size:.78rem;color:var(--text-muted);">Direct Anabolic Signaling</td><td><div class="score-bar"><div class="fill fill-a" style="width:60px;"></div><span class="pct">60</span></div></td><td><div class="score-bar"><div class="fill fill-b" style="width:40px;"></div><span class="pct">40</span></div></td><td><div class="score-bar"><div class="fill fill-c" style="width:10px;"></div><span class="pct">10</span></div></td><td><div class="score-bar"><div class="fill fill-d" style="width:50px;"></div><span class="pct">50</span></div></td><td><div class="score-bar"><div class="fill fill-e" style="width:10px;"></div><span class="pct">10</span></div></td><td><div class="score-bar"><div class="fill fill-f" style="width:30px;"></div><span class="pct">30</span></div></td><td><strong style="color:var(--rose);">33.3</strong></td></tr>
+    <tr><td><span class="rank rank-default">6</span></td><td><strong>GHK-Cu</strong></td><td style="font-size:.78rem;color:var(--text-muted);">Copper Peptide / Tissue Remodel</td><td><div class="score-bar"><div class="fill fill-a" style="width:55px;"></div><span class="pct">55</span></div></td><td><div class="score-bar"><div class="fill fill-b" style="width:10px;"></div><span class="pct">10</span></div></td><td><div class="score-bar"><div class="fill fill-c" style="width:5px;"></div><span class="pct">5</span></div></td><td><div class="score-bar"><div class="fill fill-d" style="width:5px;"></div><span class="pct">5</span></div></td><td><div class="score-bar"><div class="fill fill-e" style="width:10px;"></div><span class="pct">10</span></div></td><td><div class="score-bar"><div class="fill fill-f" style="width:92px;"></div><span class="pct">92</span></div></td><td><strong style="color:var(--rose);">29.5</strong></td></tr>
+    <tr><td><span class="rank rank-default">7</span></td><td><strong>Ipamorelin</strong></td><td style="font-size:.78rem;color:var(--text-muted);">GHRP — GH Pulse Amplifier</td><td><div class="score-bar"><div class="fill fill-a" style="width:20px;"></div><span class="pct">20</span></div></td><td><div class="score-bar"><div class="fill fill-b" style="width:25px;"></div><span class="pct">25</span></div></td><td><div class="score-bar"><div class="fill fill-c" style="width:10px;"></div><span class="pct">10</span></div></td><td><div class="score-bar"><div class="fill fill-d" style="width:30px;"></div><span class="pct">30</span></div></td><td><div class="score-bar"><div class="fill fill-e" style="width:55px;"></div><span class="pct">55</span></div></td><td><div class="score-bar"><div class="fill fill-f" style="width:30px;"></div><span class="pct">30</span></div></td><td><strong style="color:#a0b0f0;">28.3</strong></td></tr>
+    <tr><td><span class="rank rank-default">8</span></td><td><strong>DSIP</strong></td><td style="font-size:.78rem;color:var(--text-muted);">Delta Sleep-Inducing Peptide</td><td><div class="score-bar"><div class="fill fill-a" style="width:10px;"></div><span class="pct">10</span></div></td><td><div class="score-bar"><div class="fill fill-b" style="width:20px;"></div><span class="pct">20</span></div></td><td><div class="score-bar"><div class="fill fill-c" style="width:10px;"></div><span class="pct">10</span></div></td><td><div class="score-bar"><div class="fill fill-d" style="width:5px;"></div><span class="pct">5</span></div></td><td><div class="score-bar"><div class="fill fill-e" style="width:95px;"></div><span class="pct">95</span></div></td><td><div class="score-bar"><div class="fill fill-f" style="width:15px;"></div><span class="pct">15</span></div></td><td><strong style="color:var(--teal);">25.8</strong></td></tr>
+    <tr><td><span class="rank rank-default">9</span></td><td><strong>Wolverine Stack</strong></td><td style="font-size:.78rem;color:var(--text-muted);">BPC-157 + TB-500 Synergy</td><td><div class="score-bar"><div class="fill fill-a" style="width:60px;"></div><span class="pct">60</span></div></td><td><div class="score-bar"><div class="fill fill-b" style="width:30px;"></div><span class="pct">30</span></div></td><td><div class="score-bar"><div class="fill fill-c" style="width:10px;"></div><span class="pct">10</span></div></td><td><div class="score-bar"><div class="fill fill-d" style="width:0px;"></div><span class="pct">0</span></div></td><td><div class="score-bar"><div class="fill fill-e" style="width:10px;"></div><span class="pct">10</span></div></td><td><div class="score-bar"><div class="fill fill-f" style="width:40px;"></div><span class="pct">40</span></div></td><td><strong style="color:var(--steel);">25.0</strong></td></tr>
+    <tr><td><span class="rank rank-default">10</span></td><td><strong>Semax</strong></td><td style="font-size:.78rem;color:var(--text-muted);">Cognitive Champion (Specialist)</td><td><div class="score-bar"><div class="fill fill-a" style="width:15px;"></div><span class="pct">15</span></div></td><td><div class="score-bar"><div class="fill fill-b" style="width:15px;"></div><span class="pct">15</span></div></td><td><div class="score-bar"><div class="fill fill-c" style="width:95px;"></div><span class="pct">95</span></div></td><td><div class="score-bar"><div class="fill fill-d" style="width:0px;"></div><span class="pct">0</span></div></td><td><div class="score-bar"><div class="fill fill-e" style="width:0px;"></div><span class="pct">0</span></div></td><td><div class="score-bar"><div class="fill fill-f" style="width:0px;"></div><span class="pct">0</span></div></td><td><strong style="color:var(--steel);">20.8</strong></td></tr>
+    <tr><td><span class="rank rank-default">11</span></td><td><strong>KPV</strong></td><td style="font-size:.78rem;color:var(--text-muted);">Anti-Inflammatory Tripeptide</td><td><div class="score-bar"><div class="fill fill-a" style="width:50px;"></div><span class="pct">50</span></div></td><td><div class="score-bar"><div class="fill fill-b" style="width:15px;"></div><span class="pct">15</span></div></td><td><div class="score-bar"><div class="fill fill-c" style="width:15px;"></div><span class="pct">15</span></div></td><td><div class="score-bar"><div class="fill fill-d" style="width:5px;"></div><span class="pct">5</span></div></td><td><div class="score-bar"><div class="fill fill-e" style="width:10px;"></div><span class="pct">10</span></div></td><td><div class="score-bar"><div class="fill fill-f" style="width:20px;"></div><span class="pct">20</span></div></td><td><strong style="color:var(--text-muted);">19.2</strong></td></tr>
+    <tr><td><span class="rank rank-default">12</span></td><td><strong>Selank</strong></td><td style="font-size:.78rem;color:var(--text-muted);">Anxiolytic + Calm Focus</td><td><div class="score-bar"><div class="fill fill-a" style="width:10px;"></div><span class="pct">10</span></div></td><td><div class="score-bar"><div class="fill fill-b" style="width:10px;"></div><span class="pct">10</span></div></td><td><div class="score-bar"><div class="fill fill-c" style="width:40px;"></div><span class="pct">40</span></div></td><td><div class="score-bar"><div class="fill fill-d" style="width:0px;"></div><span class="pct">0</span></div></td><td><div class="score-bar"><div class="fill fill-e" style="width:40px;"></div><span class="pct">40</span></div></td><td><div class="score-bar"><div class="fill fill-f" style="width:0px;"></div><span class="pct">0</span></div></td><td><strong style="color:var(--text-muted);">16.7</strong></td></tr>
   </tbody>
 </table>
 </div>
-<p style="font-size:0.78rem;color:var(--text-muted);margin-top:14px;">
-  <strong>Key:</strong> Tesa/Ipa tops the ranking because it's broad-spectrum — good at everything.
-  MOTS-c is the cellular energy king. Semax and DSIP are <strong>lane-dominant specialists</strong> (95/100 in their primary category) but score low overall due to narrow focus.
-  If a specific goal is your priority, anchor on its specialist.
-</p>
+<p style="font-size:.78rem;color:var(--text-muted);margin-top:14px;"><strong>Key:</strong> Tesamorelin tops the ranking because it's FDA-approved and broad-spectrum. MOTS-c is the cellular energy king. Ipamorelin's breadth (moderate across 5 categories) gives it a higher rank than narrow specialists. Semax and DSIP are <strong>lane-dominant specialists</strong> (95/100 in their primary category) but score low overall.</p>
 </div>
 </div>
 
-<!-- ── Reconstitution Quick Reference ─ -->
+<!-- Reconstitution Quick Reference -->
 <div class="section" id="recon">
-<div class="section-header">
-  <h2>Reconstitution Quick Reference</h2>
-  <div class="rule"></div>
-</div>
-
+<div class="section-header"><h2>Reconstitution Quick Reference</h2><div class="rule"></div></div>
 <div class="card" style="padding:16px 20px;">
 <div class="table-wrap">
 <table>
-  <thead>
-    <tr>
-      <th>Peptide</th><th>Vial Size</th><th>BAC Water</th><th>Concentration</th><th>Dose</th><th>Draw</th><th>Doses/Vial</th>
-    </tr>
-  </thead>
+  <thead><tr><th>Peptide</th><th>Vial Size</th><th>BAC Water</th><th>Concentration</th><th>Dose</th><th>Draw</th><th>Doses/Vial</th></tr></thead>
   <tbody>
-    <tr><td><strong>Tesa/Ipa Blend</strong></td><td>10/10 mg</td><td>3 mL</td><td>3.33 mg/mL ea</td><td>1 mg / 200 mcg</td><td>30 u</td><td>10</td></tr>
+    <tr><td><strong>Tesamorelin</strong></td><td>10 mg</td><td>2 mL</td><td>5 mg/mL</td><td>1 mg</td><td>20 u</td><td>10</td></tr>
+    <tr><td><strong>Ipamorelin</strong></td><td>5 mg</td><td>2 mL</td><td>2.5 mg/mL</td><td>200 mcg</td><td>8 u</td><td>25</td></tr>
     <tr><td><strong>MOTS-c</strong></td><td>40 mg</td><td>4 mL</td><td>10 mg/mL</td><td>5 mg</td><td>50 u</td><td>8</td></tr>
     <tr><td><strong>Glutathione</strong></td><td>2,000 mg/10mL</td><td>Pre-mixed</td><td>200 mg/mL</td><td>400 mg</td><td>200 u</td><td>5</td></tr>
     <tr><td><strong>Pinealon</strong></td><td>10 mg</td><td>1 mL</td><td>10 mg/mL</td><td>5 mg</td><td>50 u</td><td>2</td></tr>
@@ -616,45 +225,54 @@
   </tbody>
 </table>
 </div>
-<p style="font-size:0.74rem;color:var(--text-muted);margin-top:12px;">
-  <strong>u = units</strong> on a U-100 insulin syringe. 100 units = 1 mL. Doses based on standard vial sizes — adjust if your actual vials differ.
-</p>
+<p style="font-size:.74rem;color:var(--text-muted);margin-top:12px;"><strong>u = units</strong> on a U-100 insulin syringe. 100 units = 1 mL. Doses based on standard vial sizes — adjust if your actual vials differ.</p>
 </div>
 </div>
 
-<!-- ── Peptide Profiles ────────────── -->
+<!-- Peptide Profiles -->
 <div class="section" id="profiles">
-<div class="section-header">
-  <h2>Peptide Profiles</h2>
-  <div class="rule"></div>
-</div>
+<div class="section-header"><h2>Peptide Profiles</h2><div class="rule"></div></div>
 
-<!-- 1: Tesa/Ipa -->
+<!-- 1: Tesamorelin -->
 <div class="profile">
-  <h3>1 · Tesa/Ipa Blend</h3>
-  <p class="rank-label">Rank #1 · GHRH + GHRP Synergy · PM Dosing (Fasted)</p>
+  <h3>1 · Tesamorelin</h3>
+  <p class="rank-label">Rank #1 · GHRH Analog (FDA-Approved) · PM Dosing (Fasted) · Mon–Fri</p>
   <div class="metric-row">
-    <div class="metric"><div class="value">3 mL</div><div class="label">BAC Water</div></div>
-    <div class="metric"><div class="value">3.33 mg/mL</div><div class="label">Concentration (Tesa)</div></div>
-    <div class="metric"><div class="value">1 mg / 200 mcg</div><div class="label">Dose (Tesa/Ipa)</div></div>
-    <div class="metric"><div class="value">30 units</div><div class="label">Syringe Draw</div></div>
-    <div class="metric"><div class="value">10 doses</div><div class="label">Per Vial (10mg ea)</div></div>
+    <div class="metric"><div class="value">2 mL</div><div class="label">BAC Water</div></div>
+    <div class="metric"><div class="value">5 mg/mL</div><div class="label">Concentration</div></div>
+    <div class="metric"><div class="value">1 mg</div><div class="label">Dose</div></div>
+    <div class="metric"><div class="value">20 units</div><div class="label">Syringe Draw</div></div>
+    <div class="metric"><div class="value">10 doses</div><div class="label">Per 10mg Vial</div></div>
   </div>
-  <p><strong>Reconstitution:</strong> Add 3 mL bacteriostatic water to a 10mg/10mg Tesa/Ipa blend vial (20mg total). Gently swirl — do not shake. Result: 3.33 mg/mL of each peptide.</p>
-  <p><strong>Dosing:</strong> 1 mg Tesamorelin + 200 mcg Ipamorelin (30 units) once daily, <strong>PM only, 90+ minutes fasted</strong>. 5 days on / 2 days off weekly. Cycle 8–10 weeks on, 4 weeks off.</p>
-  <p><strong>Benefits:</strong> GHRH (Tesamorelin) + GHRP (Ipamorelin) synergy produces amplified endogenous GH pulses. Tesamorelin is FDA-approved for visceral fat reduction (18% VAT decrease in 26 weeks). Ipamorelin is the cleanest GHRP — no cortisol, no prolactin, no hunger spike. Together: visceral fat loss, improved body composition, deeper GH-driven sleep, better skin quality, and muscle preservation.</p>
-  <p class="note"><strong>Syringe Math:</strong> 10 mg ÷ 3 mL = 3.33 mg/mL → 33.3 mcg/unit → 1,000 mcg ÷ 33.3 = 30 units for 1 mg Tesa. Ipamorelin at same concentration: 200 ÷ 33.3 ≈ 6 units equivalent. Fixed-ratio blend delivers both in one draw.</p>
-  <div class="alert alert-warn">
-    <strong>⚠️ Critical Timing:</strong> GH secretagogues MUST be taken in a fasted state (90+ min after last meal). Insulin blunts the GH pulse. Morning dosing after breakfast destroys efficacy. Take at bedtime, 2+ hours after dinner.
-  </div>
-  <div class="alert alert-warn">
-    <strong>⚠️ Histamine Alert (Tesamorelin):</strong> May trigger histamine release — full-body hives, redness, itch. Take 25–50 mg Benadryl if it occurs. Pre-medicate with antihistamine 30 min before if sensitive. Start with half-dose (15 units) for 3 days.
-  </div>
+  <p><strong>Reconstitution:</strong> Add 2 mL bacteriostatic water to a 10 mg Tesamorelin vial. Gently swirl — do not shake. Result: 5 mg/mL.</p>
+  <p><strong>Dosing:</strong> 1 mg (20 units) once daily, <strong>PM only, 90+ minutes fasted.</strong> 5 days on (Mon–Fri) / 2 days off. Combine with Ipamorelin 200 mcg (8u) in same syringe — total draw: 28u. Cycle 8–10 weeks on, 4 weeks off.</p>
+  <p><strong>Benefits:</strong> FDA-approved GHRH analog for visceral fat reduction — 18% VAT decrease in 26-week clinical trials. Stimulates pituitary GH synthesis. When paired with Ipamorelin (GHRP), GH output amplifies 3–5× vs. either alone. Targets VAT specifically — the exact mechanism for belly fat reduction.</p>
+  <p class="note"><strong>Syringe Math:</strong> 10 mg ÷ 2 mL = 5 mg/mL → 50 mcg/unit → 1,000 mcg ÷ 50 = 20 units. Combine with Ipamorelin 8u = 28u total.</p>
+  <div class="alert alert-warn"><strong>⚠️ Critical Timing:</strong> MUST be fasted (90+ min after last meal). Insulin blunts the GH pulse. Morning dosing after breakfast destroys efficacy. Take at bedtime, 2+ hours after dinner.</div>
+  <div class="alert alert-warn"><strong>⚠️ Histamine Alert:</strong> May trigger histamine release — full-body hives, redness, itch. Take 25–50 mg Benadryl if it occurs. Pre-medicate with antihistamine if sensitive. Start with 10u for 3 days if new.</div>
 </div>
 
-<!-- 2: MOTS-c -->
+<!-- 2: Ipamorelin -->
+<div class="profile indigo">
+  <h3>2 · Ipamorelin</h3>
+  <p class="rank-label">Rank #7 · GHRP (Ghrelin Agonist) · PM Dosing (Fasted) · Daily (7 Days)</p>
+  <div class="metric-row">
+    <div class="metric"><div class="value">2 mL</div><div class="label">BAC Water</div></div>
+    <div class="metric"><div class="value">2.5 mg/mL</div><div class="label">Concentration</div></div>
+    <div class="metric"><div class="value">200 mcg</div><div class="label">Dose</div></div>
+    <div class="metric"><div class="value">8 units</div><div class="label">Syringe Draw</div></div>
+    <div class="metric"><div class="value">25 doses</div><div class="label">Per 5mg Vial</div></div>
+  </div>
+  <p><strong>Reconstitution:</strong> Add 2 mL BAC water to a 5 mg Ipamorelin vial. Result: 2.5 mg/mL = 25 mcg/unit.</p>
+  <p><strong>Dosing:</strong> 200 mcg (8 units) once daily, PM, fasted. Runs 7 days/week — no weekend break (unlike Tesamorelin). No receptor desensitization. Combine with Tesamorelin 20u in same syringe (28u total). Can increase to 300 mcg (12u) for additional GH amplification.</p>
+  <p><strong>Benefits:</strong> The cleanest GHRP — selective ghrelin receptor agonist. NO cortisol elevation, NO prolactin elevation, NO hunger surge (unlike GHRP-2/GHRP-6/Hexarelin). Amplifies Tesamorelin's GH output 3–5×. Improves sleep quality via amplified overnight GH pulses. Runs 7 days for continuous GH axis support — even on weekends when Tesamorelin is off.</p>
+  <p class="note"><strong>Syringe Math:</strong> 5 mg ÷ 2 mL = 2.5 mg/mL → 25 mcg/unit → 200 mcg ÷ 25 = 8 units. With Tesamorelin 20u: 28u total injection.</p>
+  <div class="alert alert-warn"><strong>💡 The GHRH+GHRP Synergy:</strong> Tesamorelin tells the pituitary "make more GH." Ipamorelin says "release what you've got." Neither works well alone — together, GH output amplifies 3–5×. This is the core mechanism of the protocol's weight loss and sleep benefits.</div>
+</div>
+
+<!-- 3: MOTS-c -->
 <div class="profile amber">
-  <h3>2 · MOTS-c</h3>
+  <h3>3 · MOTS-c</h3>
   <p class="rank-label">Rank #2 · Mitochondrial-Derived Peptide · AM Pre-Activity · 3×/Week</p>
   <div class="metric-row">
     <div class="metric"><div class="value">4 mL</div><div class="label">BAC Water</div></div>
@@ -665,16 +283,14 @@
   </div>
   <p><strong>Reconstitution:</strong> Add 4 mL BAC water to a 40 mg MOTS-c vial. Result: 10 mg/mL.</p>
   <p><strong>Dosing:</strong> 5 mg (50 units) 3×/week (M/W/F), <strong>AM only — never at night.</strong> Start at 3 mg (30 units) for first 2 weeks if new. Cycle 4 weeks on / 2 weeks off.</p>
-  <p><strong>Benefits:</strong> MOTS-c is an "exercise mimetic" — it activates AMPK, the same pathway triggered by exercise and metformin. Enhances glucose uptake, improves insulin sensitivity, promotes fatty acid oxidation, and stimulates mitochondrial biogenesis. The premier peptide for cellular energy and metabolic optimization.</p>
-  <p class="note"><strong>Syringe Math:</strong> 40 mg ÷ 4 mL = 10 mg/mL → 100 mcg/unit → 5,000 mcg ÷ 100 = 50 units per 5 mg dose.</p>
-  <div class="alert alert-warn">
-    <strong>⚠️ Never at night:</strong> MOTS-c is energizing. PM dosing causes insomnia. Always AM, ideally pre-activity. Contraindicated in active cancer (AMPK can be pro-growth in some lines). Avoid combining with metformin.
-  </div>
+  <p><strong>Benefits:</strong> "Exercise mimetic" — activates AMPK, the same pathway triggered by exercise and metformin. Enhances glucose uptake, improves insulin sensitivity, promotes fatty acid oxidation, stimulates mitochondrial biogenesis. The premier peptide for cellular energy and metabolic optimization.</p>
+  <p class="note"><strong>Syringe Math:</strong> 40 mg ÷ 4 mL = 10 mg/mL → 100 mcg/unit → 5,000 mcg ÷ 100 = 50 units.</p>
+  <div class="alert alert-warn"><strong>⚠️ Never at night:</strong> MOTS-c is energizing. PM dosing causes insomnia. Always AM, pre-activity. Contraindicated in active cancer.</div>
 </div>
 
-<!-- 3: Glutathione -->
+<!-- 4: Glutathione -->
 <div class="profile teal">
-  <h3>3 · Glutathione</h3>
+  <h3>4 · Glutathione</h3>
   <p class="rank-label">Rank #3 · Master Antioxidant · 2–3×/Week · Any Time</p>
   <div class="metric-row">
     <div class="metric"><div class="value">Pre-mixed</div><div class="label">Format</div></div>
@@ -683,18 +299,15 @@
     <div class="metric"><div class="value">200 units</div><div class="label">Syringe Draw</div></div>
     <div class="metric"><div class="value">5 doses</div><div class="label">Per 10mL Vial</div></div>
   </div>
-  <p><strong>Format:</strong> Glutathione typically comes pre-mixed as an injectable solution (200 mg/mL), not lyophilized powder. 10 mL vial = 2,000 mg total.</p>
-  <p><strong>Dosing:</strong> 400 mg (2 mL / 200 units) SubQ or IM, 2–3× per week. Can go up to 600 mg (3 mL) if tolerated. Not a daily peptide — antioxidant effects persist for days.</p>
-  <p><strong>Benefits:</strong> The body's most abundant intracellular antioxidant. Directly neutralizes free radicals, recycles vitamins C and E, and conjugates toxins for elimination. Supports mitochondrial protection, skin brightening, immune function, and liver detoxification.</p>
-  <p class="note"><strong>Syringe Math:</strong> Pre-mixed at 200 mg/mL → 400 mg = 2 mL = 200 units. Use a 3 mL syringe with 25G needle, or split across 2 sites.</p>
-  <div class="alert alert-warn">
-    <strong>💡 Injection Comfort:</strong> Glutathione is acidic (pH ~3–4) and can sting. Inject slowly. IM is often more comfortable than SubQ for these volumes.
-  </div>
+  <p><strong>Format:</strong> Pre-mixed injectable solution (200 mg/mL). 10 mL vial = 2,000 mg total.</p>
+  <p><strong>Dosing:</strong> 400 mg (2 mL / 200 units) SubQ or IM, 2–3× per week. Can go up to 600 mg if tolerated. Not a daily peptide — antioxidant effects persist for days.</p>
+  <p><strong>Benefits:</strong> The body's most abundant intracellular antioxidant. Directly neutralizes free radicals, recycles vitamins C and E, conjugates toxins for elimination. Supports mitochondrial protection, skin brightening, immune function, liver detoxification.</p>
+  <p class="note"><strong>Syringe Math:</strong> 200 mg/mL → 400 mg = 2 mL = 200 units. Use 3 mL syringe with 25G needle, or split across 2 sites.</p>
 </div>
 
-<!-- 4: Pinealon -->
+<!-- 5: Pinealon -->
 <div class="profile steel">
-  <h3>4 · Pinealon</h3>
+  <h3>5 · Pinealon</h3>
   <p class="rank-label">Rank #4 · Brain Bioregulator · PM · 10–20 Day Cycles</p>
   <div class="metric-row">
     <div class="metric"><div class="value">1 mL</div><div class="label">BAC Water</div></div>
@@ -705,16 +318,14 @@
   </div>
   <p><strong>Reconstitution:</strong> Add 1 mL BAC water to a 10 mg Pinealon vial. Result: 10 mg/mL.</p>
   <p><strong>Dosing:</strong> 5 mg (50 units) once daily during active cycle. 10–20 day cycle, 3–6 months off between cycles. 1–2 cycles per year. <strong>PM dosing</strong> for sleep optimization; AM for cognitive focus. Pick one and stay consistent.</p>
-  <p><strong>Benefits:</strong> Pinealon enters neuronal nuclei and modulates gene expression directly (MAPK/ERK, caspase-3, antioxidant proteins). Produces a 71% increase in mushroom-shaped dendritic spines. Benefits are <strong>structural and cumulative</strong>: sleep quality improves in the first cycle, cognitive benefits compound over multiple cycles.</p>
+  <p><strong>Benefits:</strong> Pinealon enters neuronal nuclei and modulates gene expression directly (MAPK/ERK, caspase-3, antioxidant proteins). Produces 71% increase in mushroom-shaped dendritic spines. Benefits are <strong>structural and cumulative</strong>.</p>
   <p class="note"><strong>Syringe Math:</strong> 10 mg ÷ 1 mL = 10 mg/mL → 100 mcg/unit → 5,000 mcg ÷ 100 = 50 units.</p>
-  <div class="alert alert-warn">
-    <strong>🧬 Cycle Discipline is Non-Negotiable:</strong> Pinealon works through gene expression changes. The OFF period (3–6 months) is when these changes consolidate. Continuous use is not supported by evidence.
-  </div>
+  <div class="alert alert-warn"><strong>🧬 Cycle Discipline:</strong> The OFF period (3–6 months) is when gene expression changes consolidate. Continuous use is not supported by evidence.</div>
 </div>
 
-<!-- 5: IGF-1 LR3 -->
+<!-- 6: IGF-1 LR3 -->
 <div class="profile rose">
-  <h3>5 · IGF-1 LR3</h3>
+  <h3>6 · IGF-1 LR3</h3>
   <p class="rank-label">Rank #5 · Modified IGF-1 (83 AA) · Post-Workout · ⚠️ HIGHEST RISK</p>
   <div class="metric-row">
     <div class="metric"><div class="value">2 mL</div><div class="label">BAC Water</div></div>
@@ -725,17 +336,14 @@
   </div>
   <p><strong>Reconstitution:</strong> Add 2 mL BAC water to a 1 mg (1,000 mcg) IGF-1 LR3 vial. Result: 500 mcg/mL = 5 mcg/unit.</p>
   <p><strong>Dosing:</strong> 40 mcg (8 units) once daily, post-workout with carbohydrates. Cycle 4–6 weeks ON, 4–6 weeks OFF (equal or longer). Maximum 3–4 cycles per year.</p>
-  <p><strong>Benefits:</strong> Direct anabolic signaling — binds IGF-1 receptors on muscle cells, activating the PI3K/Akt pathway for protein synthesis, cell proliferation, and enhanced glucose transport. Promotes both hyperplasia and hypertrophy. Also drives lipolysis and improves insulin sensitivity.</p>
+  <p><strong>Benefits:</strong> Direct anabolic signaling — binds IGF-1 receptors, activating PI3K/Akt pathway for protein synthesis, cell proliferation, and enhanced glucose transport. Promotes hyperplasia and hypertrophy. Also drives lipolysis.</p>
   <p class="note"><strong>Syringe Math:</strong> 1,000 mcg ÷ 2 mL = 500 mcg/mL → 5 mcg/unit → 40 mcg ÷ 5 = 8 units.</p>
-  <div class="alert alert-danger">
-    <strong>⚠️ HIGHEST RISK:</strong> IGF-1 LR3 is a potent mitogenic agent. Mandatory: cancer screening before use, blood glucose monitoring (daily at first), IGF-1 labs monthly. Cycle discipline is non-negotiable — continuous use causes receptor desensitization and organ enlargement risk. Contraindicated in: active cancer, history of cancer, uncontrolled diabetes, pregnancy.<br><br>
-    <strong>Hypoglycemia protocol:</strong> Always inject with food. Keep fast-acting carbs nearby. Symptoms: shakiness, sweating, confusion, rapid heartbeat.
-  </div>
+  <div class="alert alert-danger"><strong>⚠️ HIGHEST RISK:</strong> Potent mitogenic agent. Mandatory: cancer screening, blood glucose monitoring, IGF-1 labs monthly. Contraindicated in active cancer, uncontrolled diabetes, pregnancy.<br><br><strong>Hypoglycemia protocol:</strong> Always inject with food. Keep fast-acting carbs nearby.</div>
 </div>
 
-<!-- 6: GHK-Cu -->
+<!-- 7: GHK-Cu -->
 <div class="profile rose">
-  <h3>6 · GHK-Cu</h3>
+  <h3>7 · GHK-Cu</h3>
   <p class="rank-label">Rank #6 · Copper Tripeptide (Hair/Skin 92/100) · AM Preferred · 30-Day Cycles</p>
   <div class="metric-row">
     <div class="metric"><div class="value">2 mL</div><div class="label">BAC Water</div></div>
@@ -744,19 +352,17 @@
     <div class="metric"><div class="value">20 units</div><div class="label">Syringe Draw</div></div>
     <div class="metric"><div class="value">10 doses</div><div class="label">Per 10mg Vial</div></div>
   </div>
-  <p><strong>Reconstitution:</strong> Add 2 mL BAC water to a 10 mg GHK-Cu vial. Result: 5 mg/mL = 50 mcg/unit. <strong>Blue tint is normal</strong> — this is the copper ion. Refrigerate and protect from light.</p>
-  <p><strong>Dosing:</strong> 1 mg (20 units) once daily, morning preferred. Can increase to 2 mg (40 units) after 2 weeks if tolerated. <strong>30 days ON / 14 days OFF</strong> — matches hair follicle cycle (~28 days) and prevents copper accumulation.</p>
-  <p><strong>Benefits:</strong> GHK-Cu is the body's own regenerative signal — naturally declines from ~200 ng/mL at age 20 to ~80 ng/mL at age 60. Premier hair restoration peptide (92/100): enlarges follicle size, prolongs anagen phase, stimulates dermal papilla cells. Also: collagen I/III/IV synthesis, elastin production, wound healing.</p>
+  <p><strong>Reconstitution:</strong> Add 2 mL BAC water to a 10 mg GHK-Cu vial. Result: 5 mg/mL. <strong>Blue tint is normal</strong> — copper ion. Refrigerate, protect from light.</p>
+  <p><strong>Dosing:</strong> 1 mg (20 units) once daily, morning preferred. <strong>30 days ON / 14 days OFF.</strong> Matches hair follicle cycle and prevents copper accumulation.</p>
+  <p><strong>Benefits:</strong> The body's own regenerative signal — declines from ~200 ng/mL at 20 to ~80 ng/mL at 60. Premier hair restoration peptide (92/100): enlarges follicles, prolongs anagen phase. Collagen I/III/IV synthesis, elastin production, wound healing. Activates ~4,000 genes.</p>
   <p class="note"><strong>Syringe Math:</strong> 10 mg ÷ 2 mL = 5 mg/mL → 50 mcg/unit → 1,000 mcg ÷ 50 = 20 units.</p>
-  <div class="alert alert-warn">
-    <strong>⚠️ Injection Stinging:</strong> GHK-Cu is acidic (pH ~5.5) and the copper ion stings. Inject very slowly (10–15 seconds), ice the site beforehand, or dilute with extra 1 mL BAC. Do NOT combine with other peptides — copper precipitates them.
-  </div>
+  <div class="alert alert-warn"><strong>⚠️ Injection Stinging:</strong> GHK-Cu is acidic (pH ~5.5) and the copper ion stings. Inject very slowly. Do NOT combine with other peptides — copper precipitates them.</div>
 </div>
 
-<!-- 7: DSIP -->
+<!-- 8: DSIP -->
 <div class="profile teal">
-  <h3>7 · DSIP</h3>
-  <p class="rank-label">Rank #7 · Delta Sleep-Inducing Peptide · Bedtime · Sleep Specialist (95/100)</p>
+  <h3>8 · DSIP</h3>
+  <p class="rank-label">Rank #8 · Delta Sleep-Inducing Peptide · Bedtime · Sleep Specialist (95/100)</p>
   <div class="metric-row">
     <div class="metric"><div class="value">3 mL</div><div class="label">BAC Water</div></div>
     <div class="metric"><div class="value">5 mg/mL</div><div class="label">Concentration</div></div>
@@ -765,18 +371,15 @@
     <div class="metric"><div class="value">60 doses</div><div class="label">Per 15mg Vial</div></div>
   </div>
   <p><strong>Reconstitution:</strong> Add 3 mL BAC water to a 15 mg DSIP vial. Result: 5 mg/mL = 50 mcg/unit.</p>
-  <p><strong>Dosing:</strong> 250 mcg (5 units) nightly, immediately before lights out. Can titrate to 500 mcg (10 units). Cycling optional — DSIP does not cause tolerance or receptor downregulation.</p>
-  <p><strong>Benefits:</strong> DSIP is the body's endogenous sleep-promoting neuropeptide — increases slow-wave (delta) sleep, the most restorative sleep stage. Reduces cortisol, lowers sleep latency, optimizes sleep architecture without sedation. Unlike benzodiazepines, DSIP enhances natural sleep rhythms.</p>
+  <p><strong>Dosing:</strong> 250 mcg (5 units) nightly, immediately before lights out. Can titrate to 500 mcg (10 units). No tolerance — cycling optional.</p>
+  <p><strong>Benefits:</strong> Endogenous sleep-promoting neuropeptide — increases slow-wave (delta) sleep. Reduces cortisol, lowers sleep latency, optimizes sleep architecture without sedation. Combined with Pinealon + Ipamorelin + Selank: four-layer sleep system.</p>
   <p class="note"><strong>Syringe Math:</strong> 15 mg ÷ 3 mL = 5 mg/mL → 50 mcg/unit → 250 mcg ÷ 50 = 5 units.</p>
-  <div class="alert alert-warn">
-    <strong>💡 DSIP is not a sedative:</strong> Effects are subtle and natural — most notice improved sleep quality within 1–3 nights. Higher doses (>500 mcg) can produce paradoxical alertness. Less is more.
-  </div>
 </div>
 
-<!-- 8: Wolverine Stack -->
+<!-- 9: Wolverine -->
 <div class="profile">
-  <h3>8 · Wolverine Stack</h3>
-  <p class="rank-label">Rank #8 · BPC-157 + TB-500 Synergy · Daily · Tissue Repair Foundation</p>
+  <h3>9 · Wolverine Stack</h3>
+  <p class="rank-label">Rank #9 · BPC-157 + TB-500 Synergy · Daily · Tissue Repair Foundation</p>
   <div class="metric-row">
     <div class="metric"><div class="value">3 mL</div><div class="label">BAC Water</div></div>
     <div class="metric"><div class="value">3.33 mg/mL ea</div><div class="label">Concentration</div></div>
@@ -784,19 +387,16 @@
     <div class="metric"><div class="value">30 units</div><div class="label">Syringe Draw</div></div>
     <div class="metric"><div class="value">10 doses</div><div class="label">Per 10/10 Vial</div></div>
   </div>
-  <p><strong>Reconstitution:</strong> Add 3 mL BAC water to a 10mg BPC-157 + 10mg TB-500 blend vial (20mg total). Result: 3.33 mg/mL of each peptide.</p>
-  <p><strong>Dosing:</strong> 1 mg BPC + 1 mg TB (30 units) once daily from pre-mixed blend. Cycle 6–8 weeks ON, 2–4 weeks OFF.</p>
-  <p><strong>Benefits:</strong> The premier healing stack. BPC-157 (half-life 4–6h) drives local angiogenesis, collagen synthesis, and fibroblast activity. TB-500 (half-life 48–72h) provides systemic actin regulation, cell migration guidance, and M1→M2 macrophage shift for sustained anti-inflammatory environment. Together they cover all four phases of healing: inflammation → angiogenesis → proliferation → remodeling.</p>
+  <p><strong>Reconstitution:</strong> Add 3 mL BAC water to a 10mg BPC-157 + 10mg TB-500 blend vial. Result: 3.33 mg/mL each.</p>
+  <p><strong>Dosing:</strong> 1 mg BPC + 1 mg TB (30 units) once daily. Cycle 6–8 weeks ON, 2–4 weeks OFF.</p>
+  <p><strong>Benefits:</strong> Premier healing stack. BPC-157 drives local angiogenesis and collagen synthesis. TB-500 provides systemic actin regulation and M1→M2 macrophage shift. Covers all four phases of healing.</p>
   <p class="note"><strong>Syringe Math:</strong> 10 mg ÷ 3 mL = 3.33 mg/mL → 33.3 mcg/unit → 1,000 mcg ÷ 33.3 = 30 units.</p>
-  <div class="alert alert-warn">
-    <strong>🔬 Half-Life Tension:</strong> BPC-157 ideally dosed 2×/day (4–6h half-life) but TB-500 only needs 2×/week (48–72h half-life). The once-daily blend approach prioritizes convenience — BPC's gene expression cascade outlasts its plasma half-life.
-  </div>
 </div>
 
-<!-- 9: KPV -->
+<!-- 10: KPV -->
 <div class="profile teal">
-  <h3>9 · KPV</h3>
-  <p class="rank-label">Rank #10 · α-MSH Fragment · PM · Year-Round · No Tolerance</p>
+  <h3>10 · KPV</h3>
+  <p class="rank-label">Rank #11 · α-MSH Fragment · PM · Year-Round · No Tolerance</p>
   <div class="metric-row">
     <div class="metric"><div class="value">2 mL</div><div class="label">BAC Water</div></div>
     <div class="metric"><div class="value">5 mg/mL</div><div class="label">Concentration</div></div>
@@ -805,18 +405,15 @@
     <div class="metric"><div class="value">33 doses</div><div class="label">Per 10mg Vial</div></div>
   </div>
   <p><strong>Reconstitution:</strong> Add 2 mL BAC water to a 10 mg KPV vial. Result: 5 mg/mL = 50 mcg/unit.</p>
-  <p><strong>Dosing:</strong> 300 mcg (6 units) once daily. No tolerance buildup — can be used year-round continuously.</p>
-  <p><strong>Benefits:</strong> KPV is a fragment of α-MSH — one of the body's most potent endogenous anti-inflammatory molecules. Targets GI inflammation: reduces gut permeability, calms intestinal inflammation, supports gut-brain axis. Provides the anti-inflammatory foundation so other peptides work more efficiently.</p>
+  <p><strong>Dosing:</strong> 300 mcg (6 units) once daily. No tolerance — year-round. Gut anti-inflammatory foundation.</p>
+  <p><strong>Benefits:</strong> α-MSH fragment — one of the body's most potent endogenous anti-inflammatories. Targets GI inflammation: reduces gut permeability, calms intestinal inflammation, supports gut-brain axis.</p>
   <p class="note"><strong>Syringe Math:</strong> 10 mg ÷ 2 mL = 5 mg/mL → 50 mcg/unit → 300 mcg ÷ 50 = 6 units. Smallest injection in the protocol.</p>
-  <div class="alert alert-warn">
-    <strong>💡 Gut-Brain Axis:</strong> KPV's anti-inflammatory action in the GI tract has downstream cognitive and mood benefits. Combined with Selank and Pinealon, this creates a three-layer gut-brain optimization stack.
-  </div>
 </div>
 
-<!-- 10: Semax -->
+<!-- 11: Semax -->
 <div class="profile steel">
-  <h3>10 · Semax</h3>
-  <p class="rank-label">Rank #9 · Cognitive Champion (95/100) · AM + Midday · No PM Dosing</p>
+  <h3>11 · Semax</h3>
+  <p class="rank-label">Rank #10 · Cognitive Champion (95/100) · AM + Midday · No PM Dosing</p>
   <div class="metric-row">
     <div class="metric"><div class="value">3 mL</div><div class="label">BAC Water</div></div>
     <div class="metric"><div class="value">3.33 mg/mL</div><div class="label">Concentration</div></div>
@@ -824,19 +421,16 @@
     <div class="metric"><div class="value">12 units</div><div class="label">Syringe Draw</div></div>
     <div class="metric"><div class="value">25 doses</div><div class="label">Per 10mg Vial</div></div>
   </div>
-  <p><strong>Reconstitution:</strong> Add 3 mL BAC water to a 10 mg Semax vial. Result: 3.33 mg/mL = 33.3 mcg/unit.</p>
-  <p><strong>Dosing:</strong> 400–600 mcg (12–18 units) once daily, morning. Can split AM + midday for sustained cognitive coverage. <strong>Never after 4 PM</strong> — stimulating. Cycle 6 weeks on / 2 weeks off.</p>
-  <p><strong>Benefits:</strong> Semax upregulates BDNF, improves focus, memory consolidation, and neuroplasticity. Unlike stimulants, it enhances cognition without jitteriness or crash. Pairs with Pinealon: Semax for today's focus, Pinealon for tomorrow's neuronal preservation.</p>
+  <p><strong>Reconstitution:</strong> Add 3 mL BAC water to a 10 mg Semax vial. Result: 3.33 mg/mL.</p>
+  <p><strong>Dosing:</strong> 400–600 mcg (12–18 units) once daily, morning. Can split AM + midday. <strong>Never after 4 PM.</strong> Cycle 6 weeks on / 2 weeks off.</p>
+  <p><strong>Benefits:</strong> Upregulates BDNF, improves focus, memory consolidation, and neuroplasticity. No jitteriness or crash. Pairs with Pinealon: Semax for today's focus, Pinealon for tomorrow's neuronal preservation.</p>
   <p class="note"><strong>Syringe Math:</strong> 10 mg ÷ 3 mL = 3.33 mg/mL → 33.3 mcg/unit → 400 mcg ÷ 33.3 = 12 units.</p>
-  <div class="alert alert-warn">
-    <strong>☀️ AM Only:</strong> Semax is stimulating. PM dosing will disrupt sleep. If splitting doses, second dose before 2 PM.
-  </div>
 </div>
 
-<!-- 11: Selank -->
+<!-- 12: Selank -->
 <div class="profile steel">
-  <h3>11 · Selank</h3>
-  <p class="rank-label">Rank #11 · Anxiolytic + Calm Focus · PM · As-Needed or Cycled</p>
+  <h3>12 · Selank</h3>
+  <p class="rank-label">Rank #12 · Anxiolytic + Calm Focus · PM · As-Needed or Cycled</p>
   <div class="metric-row">
     <div class="metric"><div class="value">3 mL</div><div class="label">BAC Water</div></div>
     <div class="metric"><div class="value">3.33 mg/mL</div><div class="label">Concentration</div></div>
@@ -844,456 +438,215 @@
     <div class="metric"><div class="value">15 units</div><div class="label">Syringe Draw</div></div>
     <div class="metric"><div class="value">20 doses</div><div class="label">Per 10mg Vial</div></div>
   </div>
-  <p><strong>Reconstitution:</strong> Add 3 mL BAC water to a 10 mg Selank vial. Result: 3.33 mg/mL = 33.3 mcg/unit.</p>
-  <p><strong>Dosing:</strong> 250–500 mcg (8–15 units) in the evening. As-needed for situational anxiety, or nightly during high-stress periods. No mandatory cycling — Selank does not cause dependence or withdrawal.</p>
-  <p><strong>Benefits:</strong> Selank is a tuftsin analog providing anxiolytic effects without sedation, cognitive dulling, or dependence. Modulates GABA indirectly (no withdrawal risk) and increases BDNF expression. Serves as the pre-sleep "mental off-switch" — quieting racing thoughts.</p>
+  <p><strong>Reconstitution:</strong> Add 3 mL BAC water to a 10 mg Selank vial. Result: 3.33 mg/mL.</p>
+  <p><strong>Dosing:</strong> 250–500 mcg (8–15 units) in the evening. As-needed or nightly. No dependence or withdrawal.</p>
+  <p><strong>Benefits:</strong> Tuftsin analog — anxiolytic without sedation, cognitive dulling, or dependence. Modulates GABA indirectly. Pre-sleep "mental off-switch." Completes the four-layer sleep system: DSIP (architecture) + Pinealon (circadian) + Ipamorelin (GH pulses) + Selank (anxiety).</p>
   <p class="note"><strong>Syringe Math:</strong> 10 mg ÷ 3 mL = 3.33 mg/mL → 33.3 mcg/unit → 500 mcg ÷ 33.3 = 15 units.</p>
 </div>
 </div>
 
-<!-- ── Daily Schedule ──────────────── -->
+<!-- Daily Schedule -->
 <div class="section" id="schedule">
-<div class="section-header">
-  <h2>Daily Schedule</h2>
-  <div class="rule"></div>
-</div>
+<div class="section-header"><h2>Daily Schedule</h2><div class="rule"></div></div>
 
 <div class="schedule-block">
   <div class="time-label">☀️ Morning · 8–10 AM</div>
-  <div class="sched-item">
-    <span class="name">MOTS-c</span>
-    <span class="dose">5 mg · 50 u</span>
-    <span class="note">3×/week only (M/W/F). Pre-activity. Never at night.</span>
-  </div>
-  <div class="sched-item">
-    <span class="name">Semax</span>
-    <span class="dose">400 mcg · 12 u</span>
-    <span class="note">Daily. Can split AM + midday (2 PM cutoff).</span>
-  </div>
-  <div class="sched-item">
-    <span class="name">GHK-Cu</span>
-    <span class="dose">1 mg · 20 u</span>
-    <span class="note">Daily, AM. 30 days on / 14 off. Inject slowly — stings.</span>
-  </div>
-  <div class="sched-item">
-    <span class="name">IGF-1 LR3</span>
-    <span class="dose">40 mcg · 8 u</span>
-    <span class="note">Post-workout with carbohydrates. Keep fast-acting carbs nearby.</span>
-  </div>
+  <div class="sched-item"><span class="name">MOTS-c</span><span class="dose">5 mg · 50 u</span><span class="note">3×/week only (M/W/F). Pre-activity. Never at night.</span></div>
+  <div class="sched-item"><span class="name">Semax</span><span class="dose">400 mcg · 12 u</span><span class="note">Daily. Can split AM + midday (2 PM cutoff).</span></div>
+  <div class="sched-item"><span class="name">GHK-Cu</span><span class="dose">1 mg · 20 u</span><span class="note">Daily, AM. 30 days on / 14 off. Inject slowly — stings.</span></div>
+  <div class="sched-item"><span class="name">IGF-1 LR3</span><span class="dose">40 mcg · 8 u</span><span class="note">Post-workout with carbohydrates. Keep fast-acting carbs nearby.</span></div>
 </div>
 
 <div class="schedule-block">
   <div class="time-label">🌙 Evening · 9–11 PM · Fasted (90+ min post-meal)</div>
-  <div class="sched-item">
-    <span class="name">Tesa/Ipa Blend</span>
-    <span class="dose">1 mg / 200 mcg · 30 u</span>
-    <span class="note">5 days on / 2 off (Mon–Fri). MUST be fasted.</span>
-  </div>
-  <div class="sched-item">
-    <span class="name">Wolverine Stack</span>
-    <span class="dose">1 mg ea · 30 u</span>
-    <span class="note">Daily. Tissue repair peaks during sleep.</span>
-  </div>
-  <div class="sched-item">
-    <span class="name">KPV</span>
-    <span class="dose">300 mcg · 6 u</span>
-    <span class="note">Daily. Gut lining regenerates at night.</span>
-  </div>
-  <div class="sched-item">
-    <span class="name">Selank</span>
-    <span class="dose">500 mcg · 15 u</span>
-    <span class="note">60 min before desired sleep. Quiets pre-sleep chatter.</span>
-  </div>
-  <div class="sched-item">
-    <span class="name">DSIP</span>
-    <span class="dose">250 mcg · 5 u</span>
-    <span class="note">Immediately before lights out. Subtle — not a sedative.</span>
-  </div>
-  <div class="sched-item">
-    <span class="name">Pinealon</span>
-    <span class="dose">5 mg · 50 u</span>
-    <span class="note">During active 10–20 day cycle only. 3–6 months off between.</span>
-  </div>
+  <div class="sched-item"><span class="name">Tesamorelin + Ipamorelin</span><span class="dose">1 mg + 200 mcg · 28 u</span><span class="note">Mon–Fri: Tesa + Ipa combined. Sat–Sun: Ipa 8u solo. MUST be fasted.</span></div>
+  <div class="sched-item"><span class="name">Wolverine Stack</span><span class="dose">1 mg ea · 30 u</span><span class="note">Daily. Tissue repair peaks during sleep.</span></div>
+  <div class="sched-item"><span class="name">KPV</span><span class="dose">300 mcg · 6 u</span><span class="note">Daily. Gut lining regenerates at night.</span></div>
+  <div class="sched-item"><span class="name">Pinealon + Selank</span><span class="dose">5 mg + 500 mcg · 65 u</span><span class="note">Combine in one syringe. Pinealon: only during active cycle.</span></div>
+  <div class="sched-item"><span class="name">DSIP</span><span class="dose">250 mcg · 5 u</span><span class="note">Immediately before lights out. Subtle — not a sedative.</span></div>
 </div>
 
 <div class="schedule-block">
   <div class="time-label">🔄 Any Time · 2–3×/Week</div>
-  <div class="sched-item">
-    <span class="name">Glutathione</span>
-    <span class="dose">400 mg · 200 u</span>
-    <span class="note">2–3×/week. Large injection — use 3mL syringe or split across 2 sites.</span>
-  </div>
+  <div class="sched-item"><span class="name">Glutathione</span><span class="dose">400 mg · 200 u</span><span class="note">2–3×/week. Large injection — use 3mL syringe or split across 2 sites.</span></div>
 </div>
 </div>
 
-<!-- ── Weekly Cycling Calendar ─────── -->
+<!-- Weekly Cycling Calendar -->
 <div class="section" id="cycling">
-<div class="section-header">
-  <h2>Weekly Cycling Calendar</h2>
-  <div class="rule"></div>
-</div>
-<p style="text-align:center;color:var(--text-muted);margin-bottom:24px;">
-  Color-coded daily injection load. Peak days = Monday/Wednesday/Friday (MOTS-c days).
-</p>
-
+<div class="section-header"><h2>Weekly Cycling Calendar</h2><div class="rule"></div></div>
+<p style="text-align:center;color:var(--text-muted);margin-bottom:24px;">Color-coded daily injection load. Peak days = Monday/Wednesday/Friday (MOTS-c days).</p>
 <div class="card">
 <div class="cal-grid">
-  <div class="cal-day">
-    <div class="day">Mon</div>
-    <div class="dots"><span class="d-heavy"></span><span class="d-heavy"></span><span class="d-heavy"></span></div>
-    <div><span class="load-badge load-heavy">HEAVY</span></div>
-    <div class="label">70u AM · 136u PM</div>
-  </div>
-  <div class="cal-day">
-    <div class="day">Tue</div>
-    <div class="dots"><span class="d-active"></span><span class="d-active"></span></div>
-    <div><span class="load-badge load-medium">MEDIUM</span></div>
-    <div class="label">40u AM · 136u PM</div>
-  </div>
-  <div class="cal-day">
-    <div class="day">Wed</div>
-    <div class="dots"><span class="d-heavy"></span><span class="d-heavy"></span><span class="d-heavy"></span></div>
-    <div><span class="load-badge load-heavy">HEAVY</span></div>
-    <div class="label">70u AM · 136u PM</div>
-  </div>
-  <div class="cal-day">
-    <div class="day">Thu</div>
-    <div class="dots"><span class="d-active"></span><span class="d-active"></span></div>
-    <div><span class="load-badge load-medium">MEDIUM</span></div>
-    <div class="label">40u AM · 136u PM</div>
-  </div>
-  <div class="cal-day">
-    <div class="day">Fri</div>
-    <div class="dots"><span class="d-heavy"></span><span class="d-heavy"></span><span class="d-heavy"></span></div>
-    <div><span class="load-badge load-heavy">HEAVY</span></div>
-    <div class="label">70u AM · 136u PM</div>
-  </div>
-  <div class="cal-day">
-    <div class="day">Sat</div>
-    <div class="dots"><span class="d-active"></span></div>
-    <div><span class="load-badge load-light">LIGHT</span></div>
-    <div class="label">32u AM · 56u PM</div>
-  </div>
-  <div class="cal-day">
-    <div class="day">Sun</div>
-    <div class="dots"><span class="d-active"></span></div>
-    <div><span class="load-badge load-light">LIGHT</span></div>
-    <div class="label">32u AM · 56u PM</div>
-  </div>
+  <div class="cal-day"><div class="day">Mon</div><div class="dots"><span class="d-heavy"></span><span class="d-heavy"></span><span class="d-heavy"></span></div><div><span class="load-badge load-heavy">HEAVY</span></div><div class="label">70u AM · 134u PM</div></div>
+  <div class="cal-day"><div class="day">Tue</div><div class="dots"><span class="d-active"></span><span class="d-active"></span></div><div><span class="load-badge load-medium">MEDIUM</span></div><div class="label">40u AM · 134u PM</div></div>
+  <div class="cal-day"><div class="day">Wed</div><div class="dots"><span class="d-heavy"></span><span class="d-heavy"></span><span class="d-heavy"></span></div><div><span class="load-badge load-heavy">HEAVY</span></div><div class="label">70u AM · 134u PM</div></div>
+  <div class="cal-day"><div class="day">Thu</div><div class="dots"><span class="d-active"></span><span class="d-active"></span></div><div><span class="load-badge load-medium">MEDIUM</span></div><div class="label">40u AM · 134u PM</div></div>
+  <div class="cal-day"><div class="day">Fri</div><div class="dots"><span class="d-heavy"></span><span class="d-heavy"></span><span class="d-heavy"></span></div><div><span class="load-badge load-heavy">HEAVY</span></div><div class="label">70u AM · 134u PM</div></div>
+  <div class="cal-day"><div class="day">Sat</div><div class="dots"><span class="d-active"></span></div><div><span class="load-badge load-light">LIGHT</span></div><div class="label">32u AM · 64u PM</div></div>
+  <div class="cal-day"><div class="day">Sun</div><div class="dots"><span class="d-active"></span></div><div><span class="load-badge load-light">LIGHT</span></div><div class="label">32u AM · 64u PM</div></div>
 </div>
-<p style="font-size:0.78rem;color:var(--text-muted);margin-top:14px;">
-  <strong>Heavy (M/W/F):</strong> MOTS-c 50u + Semax 12u + GHK-Cu 20u + IGF-1 LR3 8u (AM) · Tesa/Ipa 30u + Wolverine 30u + KPV 6u + Selank 15u + DSIP 5u (PM) (+ Pinealon 50u if on-cycle). Glutathione 200u on 2 of these 3 days.
+<p style="font-size:.78rem;color:var(--text-muted);margin-top:14px;">
+  <strong>Heavy (M/W/F):</strong> MOTS-c 50u + Semax 12u + GHK-Cu 20u + IGF-1 LR3 8u (AM) · Tesa+Ipa 28u + Wolverine 30u + KPV 6u + Pinealon+Selank 65u + DSIP 5u (PM) (+ Pinealon 50u if on-cycle). Glutathione 200u on 2 of these 3 days.
   <br><strong>Medium (Tu/Th):</strong> Same as heavy minus MOTS-c and Glutathione.
-  <br><strong>Light (Sat/Sun):</strong> Semax 12u + GHK-Cu 20u (AM) · Wolverine 30u + KPV 6u + Selank 15u + DSIP 5u (PM). Tesa/Ipa OFF. No MOTS-c. No IGF-1 LR3 (if off-cycle).
+  <br><strong>Light (Sat/Sun):</strong> Semax 12u + GHK-Cu 20u (AM) · Ipa 8u + Wolverine 30u + KPV 6u + Selank 15u (or Pinealon+Selank 65u) + DSIP 5u (PM). Tesamorelin OFF.
 </p>
 </div>
 </div>
 
-<!-- ── Cycle Duration Guide ────────── -->
+<!-- Cycle Duration Guide -->
 <div class="section">
-<div class="section-header">
-  <h2>Cycle Duration Guide</h2>
-  <div class="rule"></div>
-</div>
-<p style="text-align:center;color:var(--text-muted);margin-bottom:28px;">
-  Every peptide has a specific cycle length, off period, and annual frequency. Running continuously causes receptor desensitization or real danger.
-</p>
-
+<div class="section-header"><h2>Cycle Duration Guide</h2><div class="rule"></div></div>
+<p style="text-align:center;color:var(--text-muted);margin-bottom:28px;">Every peptide has a specific cycle length, off period, and annual frequency.</p>
 <div class="card" style="padding:16px 20px;">
 <div class="table-wrap">
 <table>
-  <thead>
-    <tr><th>Peptide</th><th>ON Period</th><th>OFF Period</th><th>Cycles/Year</th><th>Key Rule</th></tr>
-  </thead>
+  <thead><tr><th>Peptide</th><th>ON Period</th><th>OFF Period</th><th>Cycles/Year</th><th>Key Rule</th></tr></thead>
   <tbody>
-    <tr><td><strong>Tesa/Ipa</strong></td><td>8–10 weeks</td><td>4 weeks</td><td>3–4</td><td style="font-size:0.78rem;color:var(--text-muted);">5 on / 2 off weekly within blocks</td></tr>
-    <tr><td><strong>MOTS-c</strong></td><td>4 weeks</td><td>2 weeks</td><td>~8</td><td style="font-size:0.78rem;color:var(--text-muted);">3×/week (M/W/F) during ON blocks</td></tr>
-    <tr><td><strong>Glutathione</strong></td><td>Continuous</td><td>None</td><td>Year-round</td><td style="font-size:0.78rem;color:var(--text-muted);">2–3×/week indefinitely</td></tr>
-    <tr><td><strong>Pinealon</strong></td><td>10–20 days</td><td>3–6 months</td><td>1–2</td><td style="font-size:0.78rem;color:var(--text-muted);">Gene expression consolidation happens OFF-cycle</td></tr>
-    <tr><td><strong>IGF-1 LR3</strong></td><td>4–6 weeks</td><td>4–6 weeks (≥ ON)</td><td>3–4 max</td><td style="font-size:0.78rem;color:var(--text-muted);">⚠️ OFF ≥ ON mandatory. Cancer screening required.</td></tr>
-    <tr><td><strong>GHK-Cu</strong></td><td>30 days</td><td>14 days</td><td>~8</td><td style="font-size:0.78rem;color:var(--text-muted);">Matches hair follicle cycle. Copper accumulation prevention.</td></tr>
-    <tr><td><strong>DSIP</strong></td><td>Continuous</td><td>Optional (1–2 wks)</td><td>Year-round</td><td style="font-size:0.78rem;color:var(--text-muted);">No tolerance. Cycle off only to assess baseline.</td></tr>
-    <tr><td><strong>Wolverine</strong></td><td>6–8 weeks</td><td>2–4 weeks</td><td>3–4</td><td style="font-size:0.78rem;color:var(--text-muted);">BPC daily, TB effective at 2×/week from blend</td></tr>
-    <tr><td><strong>Semax</strong></td><td>6 weeks</td><td>2 weeks</td><td>~6</td><td style="font-size:0.78rem;color:var(--text-muted);">Preserves BDNF/trkB receptor sensitivity</td></tr>
-    <tr><td><strong>KPV</strong></td><td>Continuous</td><td>Optional (2 wks)</td><td>Year-round</td><td style="font-size:0.78rem;color:var(--text-muted);">No tolerance. Gut anti-inflammatory foundation.</td></tr>
-    <tr><td><strong>Selank</strong></td><td>As-needed / Continuous</td><td>None</td><td>Year-round</td><td style="font-size:0.78rem;color:var(--text-muted);">No tolerance, no dependence, no withdrawal</td></tr>
+    <tr><td><strong>Tesamorelin</strong></td><td>8–10 weeks</td><td>4 weeks</td><td>3–4</td><td style="font-size:.78rem;color:var(--text-muted);">5 on / 2 off weekly. Pituitary recovery on weekends.</td></tr>
+    <tr><td><strong>Ipamorelin</strong></td><td>Continuous</td><td>Optional (with Tesa cycle)</td><td>Year-round</td><td style="font-size:.78rem;color:var(--text-muted);">No desensitization. Runs 7 days. Only GHRP with clean profile.</td></tr>
+    <tr><td><strong>MOTS-c</strong></td><td>4 weeks</td><td>2 weeks</td><td>~8</td><td style="font-size:.78rem;color:var(--text-muted);">3×/week (M/W/F) during ON blocks</td></tr>
+    <tr><td><strong>Glutathione</strong></td><td>Continuous</td><td>None</td><td>Year-round</td><td style="font-size:.78rem;color:var(--text-muted);">2–3×/week indefinitely</td></tr>
+    <tr><td><strong>Pinealon</strong></td><td>10–20 days</td><td>3–6 months</td><td>1–2</td><td style="font-size:.78rem;color:var(--text-muted);">Gene expression consolidation happens OFF-cycle</td></tr>
+    <tr><td><strong>IGF-1 LR3</strong></td><td>4–6 weeks</td><td>4–6 weeks (≥ ON)</td><td>3–4 max</td><td style="font-size:.78rem;color:var(--text-muted);">⚠️ OFF ≥ ON mandatory. Cancer screening required.</td></tr>
+    <tr><td><strong>GHK-Cu</strong></td><td>30 days</td><td>14 days</td><td>~8</td><td style="font-size:.78rem;color:var(--text-muted);">Matches hair follicle cycle. Copper accumulation prevention.</td></tr>
+    <tr><td><strong>DSIP</strong></td><td>Continuous</td><td>Optional (1–2 wks)</td><td>Year-round</td><td style="font-size:.78rem;color:var(--text-muted);">No tolerance. Cycle off only to assess baseline.</td></tr>
+    <tr><td><strong>Wolverine</strong></td><td>6–8 weeks</td><td>2–4 weeks</td><td>3–4</td><td style="font-size:.78rem;color:var(--text-muted);">BPC daily, TB effective at 2×/week from blend</td></tr>
+    <tr><td><strong>Semax</strong></td><td>6 weeks</td><td>2 weeks</td><td>~6</td><td style="font-size:.78rem;color:var(--text-muted);">Preserves BDNF/trkB receptor sensitivity</td></tr>
+    <tr><td><strong>KPV</strong></td><td>Continuous</td><td>Optional (2 wks)</td><td>Year-round</td><td style="font-size:.78rem;color:var(--text-muted);">No tolerance. Gut anti-inflammatory foundation.</td></tr>
+    <tr><td><strong>Selank</strong></td><td>As-needed / Continuous</td><td>None</td><td>Year-round</td><td style="font-size:.78rem;color:var(--text-muted);">No tolerance, no dependence, no withdrawal</td></tr>
   </tbody>
 </table>
 </div>
 </div>
 </div>
 
-<!-- ── 12-Week Macro-Cycle Timeline ── -->
+<!-- 12-Week Macro-Cycle -->
 <div class="section" id="timeline">
-<div class="section-header">
-  <h2>12-Week Macro-Cycle Timeline</h2>
-  <div class="rule"></div>
-</div>
-<p style="text-align:center;color:var(--text-muted);margin-bottom:28px;">
-  A complete protocol cycle across 12 weeks. Green = Active ON. Dark = OFF cycle.
-</p>
-
+<div class="section-header"><h2>12-Week Macro-Cycle Timeline</h2><div class="rule"></div></div>
+<p style="text-align:center;color:var(--text-muted);margin-bottom:28px;">A complete protocol cycle across 12 weeks. ● = Active ON. ○ = OFF.</p>
 <div class="card" style="padding:16px 20px;">
 <div class="table-wrap">
 <table style="min-width:900px;">
-  <thead>
-    <tr>
-      <th style="min-width:100px;">Peptide</th>
-      <th style="text-align:center;">W1</th><th style="text-align:center;">W2</th><th style="text-align:center;">W3</th><th style="text-align:center;">W4</th>
-      <th style="text-align:center;">W5</th><th style="text-align:center;">W6</th><th style="text-align:center;">W7</th><th style="text-align:center;">W8</th>
-      <th style="text-align:center;">W9</th><th style="text-align:center;">W10</th><th style="text-align:center;">W11</th><th style="text-align:center;">W12</th>
-    </tr>
-  </thead>
+  <thead><tr><th style="min-width:100px;">Peptide</th><th>W1</th><th>W2</th><th>W3</th><th>W4</th><th>W5</th><th>W6</th><th>W7</th><th>W8</th><th>W9</th><th>W10</th><th>W11</th><th>W12</th></tr></thead>
   <tbody>
-    <tr>
-      <td><strong>Tesa/Ipa</strong></td>
-      <td style="background:var(--gold-bg);text-align:center;">●</td><td style="background:var(--gold-bg);text-align:center;">●</td><td style="background:var(--gold-bg);text-align:center;">●</td><td style="background:var(--gold-bg);text-align:center;">●</td>
-      <td style="background:var(--gold-bg);text-align:center;">●</td><td style="background:var(--gold-bg);text-align:center;">●</td><td style="background:var(--gold-bg);text-align:center;">●</td><td style="background:var(--gold-bg);text-align:center;">●</td>
-      <td style="background:var(--gold-bg);text-align:center;">●</td><td style="background:var(--gold-bg);text-align:center;">●</td>
-      <td style="text-align:center;color:var(--text-muted);">○</td><td style="text-align:center;color:var(--text-muted);">○</td>
-    </tr>
-    <tr>
-      <td><strong>MOTS-c</strong></td>
-      <td style="background:var(--amber-bg);text-align:center;">●</td><td style="background:var(--amber-bg);text-align:center;">●</td><td style="background:var(--amber-bg);text-align:center;">●</td><td style="background:var(--amber-bg);text-align:center;">●</td>
-      <td style="text-align:center;color:var(--text-muted);">○</td><td style="text-align:center;color:var(--text-muted);">○</td>
-      <td style="background:var(--amber-bg);text-align:center;">●</td><td style="background:var(--amber-bg);text-align:center;">●</td><td style="background:var(--amber-bg);text-align:center;">●</td><td style="background:var(--amber-bg);text-align:center;">●</td>
-      <td style="text-align:center;color:var(--text-muted);">○</td><td style="text-align:center;color:var(--text-muted);">○</td>
-    </tr>
-    <tr>
-      <td><strong>Glutathione</strong></td>
-      <td style="background:var(--teal-bg);text-align:center;" colspan="12">● &nbsp;Year-round 2–3×/week</td>
-    </tr>
-    <tr>
-      <td><strong>Pinealon</strong></td>
-      <td style="text-align:center;color:var(--text-muted);" colspan="6">○ (OFF — schedule 1–2×/year)</td>
-      <td style="background:var(--steel-bg);text-align:center;">●</td><td style="background:var(--steel-bg);text-align:center;">●</td><td style="background:var(--steel-bg);text-align:center;">●</td>
-      <td style="text-align:center;color:var(--text-muted);" colspan="3">○ (Consolidation)</td>
-    </tr>
-    <tr>
-      <td><strong>IGF-1 LR3</strong></td>
-      <td style="background:var(--rose-bg);text-align:center;">●</td><td style="background:var(--rose-bg);text-align:center;">●</td><td style="background:var(--rose-bg);text-align:center;">●</td><td style="background:var(--rose-bg);text-align:center;">●</td>
-      <td style="background:var(--rose-bg);text-align:center;">●</td><td style="background:var(--rose-bg);text-align:center;">●</td>
-      <td style="text-align:center;color:var(--text-muted);" colspan="6">○ (OFF 6 weeks)</td>
-    </tr>
-    <tr>
-      <td><strong>GHK-Cu</strong></td>
-      <td style="background:var(--rose-bg);text-align:center;">●</td><td style="background:var(--rose-bg);text-align:center;">●</td><td style="background:var(--rose-bg);text-align:center;">●</td><td style="background:var(--rose-bg);text-align:center;">●</td>
-      <td style="text-align:center;color:var(--text-muted);">○</td><td style="text-align:center;color:var(--text-muted);">○</td>
-      <td style="background:var(--rose-bg);text-align:center;">●</td><td style="background:var(--rose-bg);text-align:center;">●</td><td style="background:var(--rose-bg);text-align:center;">●</td><td style="background:var(--rose-bg);text-align:center;">●</td>
-      <td style="text-align:center;color:var(--text-muted);">○</td><td style="text-align:center;color:var(--text-muted);">○</td>
-    </tr>
-    <tr>
-      <td><strong>DSIP</strong></td>
-      <td style="background:var(--teal-bg);text-align:center;" colspan="12">● &nbsp;Year-round nightly</td>
-    </tr>
-    <tr>
-      <td><strong>Wolverine</strong></td>
-      <td style="background:var(--gold-bg);text-align:center;">●</td><td style="background:var(--gold-bg);text-align:center;">●</td><td style="background:var(--gold-bg);text-align:center;">●</td><td style="background:var(--gold-bg);text-align:center;">●</td>
-      <td style="background:var(--gold-bg);text-align:center;">●</td><td style="background:var(--gold-bg);text-align:center;">●</td><td style="background:var(--gold-bg);text-align:center;">●</td><td style="background:var(--gold-bg);text-align:center;">●</td>
-      <td style="text-align:center;color:var(--text-muted);" colspan="4">○ (OFF 4 weeks)</td>
-    </tr>
-    <tr>
-      <td><strong>Semax</strong></td>
-      <td style="background:var(--steel-bg);text-align:center;">●</td><td style="background:var(--steel-bg);text-align:center;">●</td><td style="background:var(--steel-bg);text-align:center;">●</td><td style="background:var(--steel-bg);text-align:center;">●</td>
-      <td style="background:var(--steel-bg);text-align:center;">●</td><td style="background:var(--steel-bg);text-align:center;">●</td>
-      <td style="text-align:center;color:var(--text-muted);">○</td><td style="text-align:center;color:var(--text-muted);">○</td>
-      <td style="background:var(--steel-bg);text-align:center;">●</td><td style="background:var(--steel-bg);text-align:center;">●</td><td style="background:var(--steel-bg);text-align:center;">●</td><td style="background:var(--steel-bg);text-align:center;">●</td>
-    </tr>
-    <tr>
-      <td><strong>KPV</strong></td>
-      <td style="background:var(--teal-bg);text-align:center;" colspan="12">● &nbsp;Year-round daily</td>
-    </tr>
-    <tr>
-      <td><strong>Selank</strong></td>
-      <td style="background:var(--steel-bg);text-align:center;" colspan="12">● &nbsp;Year-round nightly</td>
-    </tr>
+    <tr><td><strong>Tesamorelin</strong></td><td style="background:var(--gold-bg);text-align:center;">●</td><td style="background:var(--gold-bg);text-align:center;">●</td><td style="background:var(--gold-bg);text-align:center;">●</td><td style="background:var(--gold-bg);text-align:center;">●</td><td style="background:var(--gold-bg);text-align:center;">●</td><td style="background:var(--gold-bg);text-align:center;">●</td><td style="background:var(--gold-bg);text-align:center;">●</td><td style="background:var(--gold-bg);text-align:center;">●</td><td style="background:var(--gold-bg);text-align:center;">●</td><td style="background:var(--gold-bg);text-align:center;">●</td><td style="text-align:center;color:var(--text-muted);">○</td><td style="text-align:center;color:var(--text-muted);">○</td></tr>
+    <tr><td><strong>Ipamorelin</strong></td><td style="background:rgba(123,138,204,.1);text-align:center;" colspan="12">● &nbsp;Year-round daily (no desensitization)</td></tr>
+    <tr><td><strong>MOTS-c</strong></td><td style="background:var(--amber-bg);text-align:center;">●</td><td style="background:var(--amber-bg);text-align:center;">●</td><td style="background:var(--amber-bg);text-align:center;">●</td><td style="background:var(--amber-bg);text-align:center;">●</td><td style="text-align:center;color:var(--text-muted);">○</td><td style="text-align:center;color:var(--text-muted);">○</td><td style="background:var(--amber-bg);text-align:center;">●</td><td style="background:var(--amber-bg);text-align:center;">●</td><td style="background:var(--amber-bg);text-align:center;">●</td><td style="background:var(--amber-bg);text-align:center;">●</td><td style="text-align:center;color:var(--text-muted);">○</td><td style="text-align:center;color:var(--text-muted);">○</td></tr>
+    <tr><td><strong>Glutathione</strong></td><td style="background:var(--teal-bg);text-align:center;" colspan="12">● &nbsp;Year-round 2–3×/week</td></tr>
+    <tr><td><strong>Pinealon</strong></td><td style="text-align:center;color:var(--text-muted);" colspan="6">○ (OFF)</td><td style="background:var(--steel-bg);text-align:center;">●</td><td style="background:var(--steel-bg);text-align:center;">●</td><td style="background:var(--steel-bg);text-align:center;">●</td><td style="text-align:center;color:var(--text-muted);" colspan="3">○ (Consolidation)</td></tr>
+    <tr><td><strong>IGF-1 LR3</strong></td><td style="background:var(--rose-bg);text-align:center;">●</td><td style="background:var(--rose-bg);text-align:center;">●</td><td style="background:var(--rose-bg);text-align:center;">●</td><td style="background:var(--rose-bg);text-align:center;">●</td><td style="background:var(--rose-bg);text-align:center;">●</td><td style="background:var(--rose-bg);text-align:center;">●</td><td style="text-align:center;color:var(--text-muted);" colspan="6">○ (OFF 6 weeks)</td></tr>
+    <tr><td><strong>GHK-Cu</strong></td><td style="background:var(--rose-bg);text-align:center;">●</td><td style="background:var(--rose-bg);text-align:center;">●</td><td style="background:var(--rose-bg);text-align:center;">●</td><td style="background:var(--rose-bg);text-align:center;">●</td><td style="text-align:center;color:var(--text-muted);">○</td><td style="text-align:center;color:var(--text-muted);">○</td><td style="background:var(--rose-bg);text-align:center;">●</td><td style="background:var(--rose-bg);text-align:center;">●</td><td style="background:var(--rose-bg);text-align:center;">●</td><td style="background:var(--rose-bg);text-align:center;">●</td><td style="text-align:center;color:var(--text-muted);">○</td><td style="text-align:center;color:var(--text-muted);">○</td></tr>
+    <tr><td><strong>DSIP</strong></td><td style="background:var(--teal-bg);text-align:center;" colspan="12">● &nbsp;Year-round nightly</td></tr>
+    <tr><td><strong>Wolverine</strong></td><td style="background:var(--gold-bg);text-align:center;">●</td><td style="background:var(--gold-bg);text-align:center;">●</td><td style="background:var(--gold-bg);text-align:center;">●</td><td style="background:var(--gold-bg);text-align:center;">●</td><td style="background:var(--gold-bg);text-align:center;">●</td><td style="background:var(--gold-bg);text-align:center;">●</td><td style="background:var(--gold-bg);text-align:center;">●</td><td style="background:var(--gold-bg);text-align:center;">●</td><td style="text-align:center;color:var(--text-muted);" colspan="4">○ (OFF 4 weeks)</td></tr>
+    <tr><td><strong>Semax</strong></td><td style="background:var(--steel-bg);text-align:center;">●</td><td style="background:var(--steel-bg);text-align:center;">●</td><td style="background:var(--steel-bg);text-align:center;">●</td><td style="background:var(--steel-bg);text-align:center;">●</td><td style="background:var(--steel-bg);text-align:center;">●</td><td style="background:var(--steel-bg);text-align:center;">●</td><td style="text-align:center;color:var(--text-muted);">○</td><td style="text-align:center;color:var(--text-muted);">○</td><td style="background:var(--steel-bg);text-align:center;">●</td><td style="background:var(--steel-bg);text-align:center;">●</td><td style="background:var(--steel-bg);text-align:center;">●</td><td style="background:var(--steel-bg);text-align:center;">●</td></tr>
+    <tr><td><strong>KPV</strong></td><td style="background:var(--teal-bg);text-align:center;" colspan="12">● &nbsp;Year-round daily</td></tr>
+    <tr><td><strong>Selank</strong></td><td style="background:var(--steel-bg);text-align:center;" colspan="12">● &nbsp;Year-round nightly</td></tr>
   </tbody>
 </table>
 </div>
-
-<p style="font-size:0.78rem;color:var(--text-muted);margin-top:16px;">
-  <strong>Weeks 1–6 "Foundation":</strong> Full stack active — maximum output phase.<br>
-  <strong>Weeks 7–8 "Shift":</strong> MOTS-c back ON (Block 2). IGF-1 LR3 OFF. Semax OFF (BDNF reset). Pinealon ON (10–20 day cycle).<br>
-  <strong>Weeks 9–10 "Consolidation":</strong> Tesa/Ipa final block. Wolverine OFF. Semax back ON.<br>
-  <strong>Weeks 11–12 "Washout":</strong> Tesa/Ipa OFF. MOTS-c OFF. Minimal stack — body recalibrates.
-</p>
 </div>
 </div>
 
-<!-- ── Annual Macro-Cycle ──────────── -->
+<!-- Annual Overview -->
 <div class="section">
-<div class="section-header">
-  <h2>Annual Macro-Cycle Overview</h2>
-  <div class="rule"></div>
-</div>
-<p style="text-align:center;color:var(--text-muted);margin-bottom:28px;">
-  How the protocol maps across a full year — 4 macro-cycles with strategic washout periods and Pinealon placement.
-</p>
-
+<div class="section-header"><h2>Annual Macro-Cycle Overview</h2><div class="rule"></div></div>
 <div class="card" style="padding:16px 20px;">
 <div class="table-wrap">
 <table>
-  <thead>
-    <tr><th>Quarter</th><th>Months</th><th>Focus</th><th>Active Peptides</th><th>Key Events</th></tr>
-  </thead>
+  <thead><tr><th>Quarter</th><th>Months</th><th>Focus</th><th>Active Peptides</th><th>Key Events</th></tr></thead>
   <tbody>
-    <tr>
-      <td><strong>Q1</strong></td><td>Jan–Mar</td>
-      <td><span class="load-badge load-heavy">MAX OUTPUT</span></td>
-      <td style="font-size:0.78rem;color:var(--text-muted);">Tesa/Ipa, MOTS-c, Semax, IGF-1, Wolverine, KPV, GHK-Cu, DSIP, Selank, Glutathione</td>
-      <td style="font-size:0.78rem;color:var(--text-muted);">Full 12-week cycle. MOTS-c 4-on/2-off/4-on. IGF-1 LR3 weeks 1–6.</td>
-    </tr>
-    <tr>
-      <td><strong>Q2</strong></td><td>Apr–Jun</td>
-      <td><span class="load-badge load-medium">MAINTENANCE</span></td>
-      <td style="font-size:0.78rem;color:var(--text-muted);">Tesa/Ipa, MOTS-c, Semax, KPV, GHK-Cu, DSIP, Selank, Glutathione</td>
-      <td style="font-size:0.78rem;color:var(--text-muted);">IGF-1 LR3 OFF. Wolverine OFF. <strong>Pinealon cycle</strong> (10–20 days in Apr).</td>
-    </tr>
-    <tr>
-      <td><strong>Q3</strong></td><td>Jul–Sep</td>
-      <td><span class="load-badge load-heavy">MAX OUTPUT</span></td>
-      <td style="font-size:0.78rem;color:var(--text-muted);">Tesa/Ipa, MOTS-c, Semax, IGF-1, Wolverine, KPV, GHK-Cu, DSIP, Selank, Glutathione</td>
-      <td style="font-size:0.78rem;color:var(--text-muted);">Second full cycle. IGF-1 LR3 weeks 1–6. Wolverine weeks 1–8.</td>
-    </tr>
-    <tr>
-      <td><strong>Q4</strong></td><td>Oct–Dec</td>
-      <td><span class="load-badge load-light">FOUNDATION</span></td>
-      <td style="font-size:0.78rem;color:var(--text-muted);">DSIP, Selank, KPV, GHK-Cu, Glutathione, Semax (optional)</td>
-      <td style="font-size:0.78rem;color:var(--text-muted);">GH axis rested. <strong>Pinealon cycle</strong> (10–20 days in Oct). Extended washout. Labs + reassessment.</td>
-    </tr>
+    <tr><td><strong>Q1</strong></td><td>Jan–Mar</td><td><span class="load-badge load-heavy">MAX OUTPUT</span></td><td style="font-size:.78rem;color:var(--text-muted);">Tesa, Ipa, MOTS-c, Semax, IGF-1, Wolverine, KPV, GHK-Cu, DSIP, Selank, Glutathione</td><td style="font-size:.78rem;color:var(--text-muted);">Full 12-week cycle. MOTS-c 4-on/2-off/4-on. IGF-1 LR3 weeks 1–6.</td></tr>
+    <tr><td><strong>Q2</strong></td><td>Apr–Jun</td><td><span class="load-badge load-medium">MAINTENANCE</span></td><td style="font-size:.78rem;color:var(--text-muted);">Tesa, Ipa, MOTS-c, Semax, KPV, GHK-Cu, DSIP, Selank, Glutathione</td><td style="font-size:.78rem;color:var(--text-muted);">IGF-1 LR3 OFF. Wolverine OFF. <strong>Pinealon cycle</strong> (10–20 days in Apr).</td></tr>
+    <tr><td><strong>Q3</strong></td><td>Jul–Sep</td><td><span class="load-badge load-heavy">MAX OUTPUT</span></td><td style="font-size:.78rem;color:var(--text-muted);">Tesa, Ipa, MOTS-c, Semax, IGF-1, Wolverine, KPV, GHK-Cu, DSIP, Selank, Glutathione</td><td style="font-size:.78rem;color:var(--text-muted);">Second full cycle. IGF-1 LR3 weeks 1–6. Wolverine weeks 1–8.</td></tr>
+    <tr><td><strong>Q4</strong></td><td>Oct–Dec</td><td><span class="load-badge load-light">FOUNDATION</span></td><td style="font-size:.78rem;color:var(--text-muted);">Ipa, DSIP, Selank, KPV, GHK-Cu, Glutathione, Semax (optional)</td><td style="font-size:.78rem;color:var(--text-muted);">GH axis rested. <strong>Pinealon cycle</strong> (10–20 days in Oct). Extended washout.</td></tr>
   </tbody>
 </table>
 </div>
-<p style="font-size:0.78rem;color:var(--text-muted);margin-top:14px;">
-  <strong>Annual lab schedule:</strong> Pre-Q1 (baseline, late Dec) → Post-Q1 (late Mar) → Mid-Q3 (Aug) → Year-end (Dec).
-  IGF-1, HbA1c, fasting glucose, CMP, lipid panel at minimum. Add cancer screening pre-Q1 and pre-Q3 (before each IGF-1 LR3 cycle).
-</p>
 </div>
 </div>
 
-<!-- ── Injection Load by Day ───────── -->
+<!-- Injection Load by Day -->
 <div class="section" id="loads">
-<div class="section-header">
-  <h2>Injection Load by Day</h2>
-  <div class="rule"></div>
-</div>
-
+<div class="section-header"><h2>Injection Load by Day</h2><div class="rule"></div></div>
 <div class="card" style="padding:16px 20px;">
 <div class="table-wrap">
 <table>
   <thead><tr><th>Day</th><th>AM Injections</th><th>PM Injections</th><th>AM Units</th><th>PM Units</th><th>Load</th></tr></thead>
   <tbody>
-    <tr><td><strong>Mon</strong></td><td>MOTS-c + Semax + GHK-Cu + IGF-1 LR3</td><td>Tesa/Ipa + Wolverine + KPV + Selank + DSIP</td><td>70u</td><td>136u</td><td><span class="load-badge load-heavy">HEAVY</span></td></tr>
-    <tr><td><strong>Tue</strong></td><td>Semax + GHK-Cu + IGF-1 LR3</td><td>Tesa/Ipa + Wolverine + KPV + Selank + DSIP</td><td>40u</td><td>136u</td><td><span class="load-badge load-medium">MEDIUM</span></td></tr>
-    <tr><td><strong>Wed</strong></td><td>MOTS-c + Semax + GHK-Cu + IGF-1 LR3</td><td>Tesa/Ipa + Wolverine + KPV + Selank + DSIP</td><td>70u</td><td>136u</td><td><span class="load-badge load-heavy">HEAVY</span></td></tr>
-    <tr><td><strong>Thu</strong></td><td>Semax + GHK-Cu + IGF-1 LR3</td><td>Tesa/Ipa + Wolverine + KPV + Selank + DSIP</td><td>40u</td><td>136u</td><td><span class="load-badge load-medium">MEDIUM</span></td></tr>
-    <tr><td><strong>Fri</strong></td><td>MOTS-c + Semax + GHK-Cu + IGF-1 LR3</td><td>Tesa/Ipa + Wolverine + KPV + Selank + DSIP</td><td>70u</td><td>136u</td><td><span class="load-badge load-heavy">HEAVY</span></td></tr>
-    <tr><td><strong>Sat</strong></td><td>Semax + GHK-Cu</td><td>Wolverine + KPV + Selank + DSIP</td><td>32u</td><td>56u</td><td><span class="load-badge load-light">LIGHT</span></td></tr>
-    <tr><td><strong>Sun</strong></td><td>Semax + GHK-Cu</td><td>Wolverine + KPV + Selank + DSIP</td><td>32u</td><td>56u</td><td><span class="load-badge load-light">LIGHT</span></td></tr>
+    <tr><td><strong>Mon</strong></td><td>MOTS-c + Semax + GHK-Cu + IGF-1 LR3</td><td>Tesa+Ipa + Wolverine + KPV + Pinealon+Selank + DSIP</td><td>70u</td><td>134u</td><td><span class="load-badge load-heavy">HEAVY</span></td></tr>
+    <tr><td><strong>Tue</strong></td><td>Semax + GHK-Cu + IGF-1 LR3</td><td>Tesa+Ipa + Wolverine + KPV + Pinealon+Selank + DSIP</td><td>40u</td><td>134u</td><td><span class="load-badge load-medium">MEDIUM</span></td></tr>
+    <tr><td><strong>Wed</strong></td><td>MOTS-c + Semax + GHK-Cu + IGF-1 LR3</td><td>Tesa+Ipa + Wolverine + KPV + Pinealon+Selank + DSIP</td><td>70u</td><td>134u</td><td><span class="load-badge load-heavy">HEAVY</span></td></tr>
+    <tr><td><strong>Thu</strong></td><td>Semax + GHK-Cu + IGF-1 LR3</td><td>Tesa+Ipa + Wolverine + KPV + Pinealon+Selank + DSIP</td><td>40u</td><td>134u</td><td><span class="load-badge load-medium">MEDIUM</span></td></tr>
+    <tr><td><strong>Fri</strong></td><td>MOTS-c + Semax + GHK-Cu + IGF-1 LR3</td><td>Tesa+Ipa + Wolverine + KPV + Pinealon+Selank + DSIP</td><td>70u</td><td>134u</td><td><span class="load-badge load-heavy">HEAVY</span></td></tr>
+    <tr><td><strong>Sat</strong></td><td>Semax + GHK-Cu</td><td>Ipa solo + Wolverine + KPV + Selank + DSIP</td><td>32u</td><td>64u</td><td><span class="load-badge load-light">LIGHT</span></td></tr>
+    <tr><td><strong>Sun</strong></td><td>Semax + GHK-Cu</td><td>Ipa solo + Wolverine + KPV + Selank + DSIP</td><td>32u</td><td>64u</td><td><span class="load-badge load-light">LIGHT</span></td></tr>
   </tbody>
 </table>
 </div>
-<p style="font-size:0.76rem;color:var(--text-muted);margin-top:12px;">
-  Glutathione (+200u) added to 2–3 heavy/medium days per week. IGF-1 LR3 omitted on light days if in OFF-cycle. Pinealon omitted if not in active cycle. Saturday/Sunday: recovery days — Tesa/Ipa washout, fewer injections.
-</p>
 </div>
 </div>
 
-<!-- ── Supplies Checklist ──────────── -->
-<div class="section">
-<div class="section-header">
-  <h2>Supplies Checklist</h2>
-  <div class="rule"></div>
-</div>
-<div class="card">
-  <ul class="checklist">
-    <li><strong>Insulin syringes (U-100, 1 mL, 31G):</strong> 60–90 per month. Heavy injection load on weekdays.</li>
-    <li><strong>3 mL syringes with 25G needles:</strong> 8–12 per month — for Glutathione (2 mL volume).</li>
-    <li><strong>Alcohol swabs:</strong> 120+ per month (2 per injection).</li>
-    <li><strong>Bacteriostatic water (30 mL):</strong> 1–2 bottles. Reconstitutes all lyophilized peptides.</li>
-    <li><strong>Sharps container:</strong> FDA-cleared, puncture-resistant.</li>
-    <li><strong>Refrigerated storage:</strong> Dedicated peptide container at 2–8°C (36–46°F).</li>
-    <li><strong>Glucose tablets / fast-acting carbs:</strong> For IGF-1 LR3 hypoglycemia safety.</li>
-    <li><strong>Benadryl (25–50 mg):</strong> For Tesamorelin histamine reaction backup.</li>
-    <li><strong>Blood glucose monitor:</strong> Daily during first weeks of IGF-1 LR3 cycle.</li>
-  </ul>
-</div>
-</div>
+<!-- Supplies Checklist -->
+<div class="section"><div class="section-header"><h2>Supplies Checklist</h2><div class="rule"></div></div>
+<div class="card"><ul class="checklist">
+  <li><strong>Insulin syringes (U-100, 1 mL, 31G):</strong> 60–90 per month.</li>
+  <li><strong>3 mL syringes with 25G needles:</strong> 8–12 per month — for Glutathione.</li>
+  <li><strong>Alcohol swabs:</strong> 120+ per month (2 per injection).</li>
+  <li><strong>Bacteriostatic water (30 mL):</strong> 1–2 bottles.</li>
+  <li><strong>Sharps container:</strong> FDA-cleared, puncture-resistant.</li>
+  <li><strong>Refrigerated storage:</strong> 2–8°C (36–46°F).</li>
+  <li><strong>Glucose tablets:</strong> For IGF-1 LR3 hypoglycemia safety.</li>
+  <li><strong>Benadryl (25–50 mg):</strong> For Tesamorelin histamine reaction backup.</li>
+  <li><strong>Blood glucose monitor:</strong> During IGF-1 LR3 cycles.</li>
+</ul></div></div>
 
-<!-- ── Injection Technique ─────────── -->
-<div class="section">
-<div class="section-header">
-  <h2>Injection Technique</h2>
-  <div class="rule"></div>
-</div>
+<!-- Injection Technique -->
+<div class="section"><div class="section-header"><h2>Injection Technique</h2><div class="rule"></div></div>
 <div class="card">
-  <ol style="padding-left:24px;color:var(--text-secondary);line-height:2.4;font-size:0.9rem;">
-    <li><strong>Wash hands</strong> thoroughly with soap and warm water.</li>
-    <li><strong>Wipe vial stopper</strong> with alcohol swab. Let dry completely.</li>
-    <li><strong>Draw air</strong> into syringe equal to dose volume. Inject air into vial.</li>
-    <li><strong>Draw dose slowly.</strong> Flick to dislodge bubbles, expel air.</li>
+  <ol style="padding-left:24px;color:var(--text-secondary);line-height:2.4;font-size:.9rem;">
+    <li><strong>Wash hands</strong> thoroughly.</li>
+    <li><strong>Wipe vial stopper</strong> with alcohol swab. Let dry.</li>
+    <li><strong>Draw air</strong> into syringe equal to dose. Inject air into vial.</li>
+    <li><strong>Draw dose slowly.</strong> Flick bubbles, expel air.</li>
     <li><strong>Wipe injection site</strong> with fresh alcohol swab. Let dry.</li>
-    <li><strong>Pinch skin fold</strong> (1–2 inches). Insert at 45° (lean areas) or 90° (abdomen).</li>
-    <li><strong>Inject slowly:</strong> Small volumes 5s, medium 10s, large (100u+) 15–20s.</li>
-    <li><strong>Withdraw needle,</strong> apply gentle pressure. Do not massage.</li>
-    <li><strong>Dispose immediately</strong> in sharps container. Never recap a used needle.</li>
-    <li><strong>Rotate sites:</strong> Abdomen, thighs, love handles, upper glutes. No same spot within 3 days.</li>
+    <li><strong>Pinch skin fold.</strong> Insert at 45° (lean) or 90° (abdomen).</li>
+    <li><strong>Inject slowly.</strong> Small 5s, medium 10s, large 15–20s.</li>
+    <li><strong>Withdraw,</strong> apply gentle pressure. Do not massage.</li>
+    <li><strong>Dispose immediately</strong> in sharps container.</li>
+    <li><strong>Rotate sites:</strong> Abdomen, thighs, love handles, glutes.</li>
   </ol>
-  <p style="font-size:0.85rem;color:var(--gold-bright);margin-top:20px;"><strong>Large-Volume Injections (≥100 units):</strong></p>
-  <p style="font-size:0.82rem;color:var(--text-muted);">
-    Glutathione (200u) is the only large-volume injection in the protocol.
-    Use <strong>fattier sites</strong> (love handles, upper outer glute). Inject very slowly (20–30 seconds).
-    Either use a 3 mL syringe with 25G needle (IM glute), or split across 2 insulin syringes at different sites.
-    Warm the syringe in your hand for 30 seconds before injecting.
-  </p>
-</div>
-</div>
+  <p style="font-size:.85rem;color:var(--gold-bright);margin-top:20px;"><strong>Large-Volume Injections (≥100 units):</strong></p>
+  <p style="font-size:.82rem;color:var(--text-muted);">Glutathione (200u) is the only large-volume injection. Use 3 mL syringe with 25G needle (IM glute), or split across 2 insulin syringes. Warm syringe in hand for 30 seconds before injecting.</p>
+</div></div>
 
-<!-- ── FAQ ─────────────────────────── -->
-<div class="section" id="faq">
-<div class="section-header">
-  <h2>Common Questions</h2>
-  <div class="rule"></div>
-</div>
+<!-- FAQ -->
+<div class="section" id="faq"><div class="section-header"><h2>Common Questions</h2><div class="rule"></div></div>
 <div class="card">
-  <p><strong style="color:var(--gold-bright);">Q: Why is Tesa/Ipa #1 when it doesn't score highest in any single category?</strong></p>
-  <p style="color:var(--text-muted);margin-bottom:20px;font-size:0.88rem;">Because it's good at everything. Tesa/Ipa scores 50+ in 4 of 6 categories — no other peptide does that. It's the foundation the rest of the stack is built on. The specialty peptides dominate their individual lanes but contribute nothing elsewhere.</p>
+  <p><strong style="color:var(--gold-bright);">Q: Why split Tesamorelin and Ipamorelin instead of using the blend?</strong></p>
+  <p style="color:var(--text-muted);margin-bottom:20px;font-size:.88rem;">Two reasons. First: Tesamorelin needs weekends off (pituitary GHRH receptor recovery), but Ipamorelin doesn't (no ghrelin receptor desensitization). Running Ipa on weekends gives better GH coverage and sleep quality. Second: if Tesamorelin's histamine reaction becomes an issue, you can drop Tesa and keep Ipa — with the blend you lose both.</p>
 
-  <p><strong style="color:var(--gold-bright);">Q: Can I combine injections to reduce the number of pokes?</strong></p>
-  <p style="color:var(--text-muted);margin-bottom:20px;font-size:0.88rem;"><strong>Compatible in same syringe:</strong> Wolverine Stack (already blended), Tesa/Ipa (already blended). <strong>Can combine:</strong> Semax + Selank (similar pH). <strong>Never combine:</strong> Tesa/Ipa with anything else (fasted state, pH sensitivity). MOTS-c (full syringe already). IGF-1 LR3 (precise micro-dosing). Glutathione (acidic). Pinealon (gene expression peptide). DSIP (only 5 units — not worth combining).</p>
+  <p><strong style="color:var(--gold-bright);">Q: Can I combine injections?</strong></p>
+  <p style="color:var(--text-muted);margin-bottom:20px;font-size:.88rem;"><strong>Yes (same syringe):</strong> Tesamorelin + Ipamorelin (28u total), Pinealon + Selank (65u total), Wolverine (already blended). <strong>Never combine:</strong> GHK-Cu with anything (copper precipitates peptides). Tesa/Ipa with non-GH peptides (fasted state). IGF-1 LR3 (micro-dose — don't dilute). Glutathione (acidic).</p>
 
-  <p><strong style="color:var(--gold-bright);">Q: What happens if I miss a dose?</strong></p>
-  <p style="color:var(--text-muted);margin-bottom:20px;font-size:0.88rem;"><strong>MOTS-c:</strong> Skip, resume next scheduled day. <strong>Semax:</strong> Skip. <strong>IGF-1 LR3:</strong> Skip, never double dose. <strong>Tesa/Ipa:</strong> Skip. <strong>Wolverine:</strong> Skip. <strong>DSIP:</strong> Skip. <strong>Selank:</strong> Take if within 2 hours; otherwise skip. <strong>Pinealon:</strong> Resume next day; extend cycle by 1 day. <strong>Glutathione:</strong> Take next day — flexible.</p>
+  <p><strong style="color:var(--gold-bright);">Q: What if I miss a dose?</strong></p>
+  <p style="color:var(--text-muted);margin-bottom:20px;font-size:.88rem;"><strong>MOTS-c:</strong> Skip, resume next scheduled day. <strong>Tesamorelin/Ipamorelin:</strong> Skip — never double dose. <strong>IGF-1 LR3:</strong> Skip. <strong>DSIP:</strong> Skip. <strong>Pinealon:</strong> Resume next day; extend cycle by 1 day. <strong>All others:</strong> Skip, resume next day.</p>
 
-  <p><strong style="color:var(--gold-bright);">Q: How long until results?</strong></p>
-  <p style="color:var(--text-muted);margin-bottom:20px;font-size:0.88rem;"><strong>DSIP:</strong> 1–3 nights. <strong>MOTS-c:</strong> 1–2 weeks. <strong>Semax:</strong> Same day. <strong>Tesa/Ipa:</strong> 8–12 weeks (noticeable); 26 weeks (measurable VAT). <strong>Glutathione/Pinealon:</strong> Cumulative — track biomarkers. <strong>GHK-Cu (hair/skin):</strong> 30–90 days. <strong>Wolverine:</strong> Days for pain; weeks-to-months for structural repair.</p>
+  <p><strong style="color:var(--gold-bright);">Q: Is 12 peptides too many?</strong></p>
+  <p style="color:var(--text-muted);font-size:.88rem;">This is a high-intensity, multi-goal protocol. Every peptide serves a distinct, non-redundant mechanism. The highest-risk component is IGF-1 LR3. If trimming: Glutathione and Selank are the lowest-consequence drops. The core seven — Tesamorelin, Ipamorelin, MOTS-c, Semax, Pinealon, DSIP, and GHK-Cu — deliver 85% of the protocol's total benefit across all 6 goals.</p>
+</div></div>
 
-  <p><strong style="color:var(--gold-bright);">Q: Is 11 peptides too many?</strong></p>
-  <p style="color:var(--text-muted);font-size:0.88rem;">This is a high-intensity, multi-goal protocol — not a starter stack. However, every peptide serves a distinct, non-redundant mechanism. The highest-risk component is IGF-1 LR3. If trimming: Glutathione and Selank are the lowest-consequence drops. The core seven — Tesa/Ipa, MOTS-c, Semax, Pinealon, DSIP, KPV, and GHK-Cu — deliver 85% of the protocol's total benefit.</p>
-</div>
-</div>
-
-<!-- ── Medical Disclaimer ──────────── -->
+<!-- Medical Disclaimer -->
 <div class="disclaimer">
   <h4>⚕ Medical Disclaimer</h4>
-  <p>
-    This protocol is for <strong>educational and informational purposes only</strong>. It does not constitute medical advice, diagnosis, or treatment.
-    Most peptides described are not FDA-approved for human use. Consult a qualified healthcare provider before beginning any peptide protocol.
-    Individual responses vary significantly. Start low, go slow, monitor labs, and listen to your body.
-    <br><br>
-    <strong>Specific warnings:</strong> IGF-1 LR3 requires cancer screening and glucose monitoring. Tesamorelin is contraindicated in active malignancy.
-    MOTS-c is contraindicated in active cancer. TB-500 carries theoretical oncogenic risk. BPC-157 promotes angiogenesis — theoretical risk of accelerating existing tumors.
-  </p>
+  <p>This protocol is for <strong>educational and informational purposes only</strong>. It does not constitute medical advice, diagnosis, or treatment. Most peptides described are not FDA-approved for human use. Consult a qualified healthcare provider before beginning any peptide protocol.<br><br><strong>Specific warnings:</strong> IGF-1 LR3 requires cancer screening and glucose monitoring. Tesamorelin contraindicated in active malignancy. MOTS-c contraindicated in active cancer. TB-500 carries theoretical oncogenic risk. BPC-157 promotes angiogenesis.</p>
 </div>
 
 <div class="footer">
-  <p>The Greek Cheetah Protocol &nbsp;·&nbsp; v2.0 &nbsp;·&nbsp; Standalone Edition</p>
-  <p style="margin-top:6px;">
-    <a href="https://theastark1-cpu.github.io/greek-cheetah-protocol/">GitHub Pages</a> &nbsp;·&nbsp;
-    <a href="https://greek-cheetah.surge.sh">Surge.sh</a>
-  </p>
+  <p>The Greek Cheetah Protocol &nbsp;·&nbsp; v2.2 &nbsp;·&nbsp; Standalone Edition</p>
+  <p style="margin-top:6px;"><a href="https://theastark1-cpu.github.io/greek-cheetah-protocol/">GitHub Pages</a> &nbsp;·&nbsp; <a href="https://greek-cheetah.surge.sh">Surge.sh</a></p>
 </div>
 
-</div><!-- /.container -->
+</div>
 </body>
 </html>
